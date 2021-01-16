@@ -51,7 +51,7 @@
             <v-sheet min-height="70vh" rounded="lg">
               <!--  -->
 
-              <Login />
+              <SignUp />
             </v-sheet>
           </v-col>
         </v-row>
@@ -63,11 +63,11 @@
 <script>
 // @ is an alias to /src
 // import HelloWorld from "@/components/HelloWorld.vue";
-import Login from "@/components//Login.vue";
+import SignUp from "@/components//SignUp.vue";
 
 export default {
   name: "Home",
-  components: { Login },
+  components: { SignUp },
   data: () => ({
     links: ["Dashboard", "Messages", "Profile", "Updates"]
   })

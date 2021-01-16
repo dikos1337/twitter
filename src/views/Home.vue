@@ -52,6 +52,8 @@
               <!--  -->
 
               <SignUp />
+              <br />
+              <Login />
             </v-sheet>
           </v-col>
         </v-row>
@@ -63,11 +65,12 @@
 <script>
 // @ is an alias to /src
 // import HelloWorld from "@/components/HelloWorld.vue";
-import SignUp from "@/components//SignUp.vue";
+import SignUp from "@/components/SignUp.vue";
+import Login from "@/components//Login.vue";
 
 export default {
   name: "Home",
-  components: { SignUp },
+  components: { SignUp, Login },
   data: () => ({
     links: ["Dashboard", "Messages", "Profile", "Updates"]
   })

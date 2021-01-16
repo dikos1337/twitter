@@ -50,10 +50,16 @@
           <v-col>
             <v-sheet min-height="70vh" rounded="lg">
               <!--  -->
-
-              <SignUp />
               <br />
-              <Login />
+              <TweetCard />
+              <br />
+              <TweetCard />
+              <br />
+              <!-- <TweetCard />
+              <br />
+              <TweetCard />
+              <br />
+              <TweetCard /> -->
             </v-sheet>
           </v-col>
         </v-row>
@@ -65,12 +71,15 @@
 <script>
 // @ is an alias to /src
 // import HelloWorld from "@/components/HelloWorld.vue";
-import SignUp from "@/components/SignUp.vue";
-import Login from "@/components//Login.vue";
+// import SignUp from "@/components/SignUp.vue";
+// import Login from "@/components//Login.vue";
+import TweetCard from "@/components//TweetCard.vue";
 
 export default {
   name: "Home",
-  components: { SignUp, Login },
+  // components: { SignUp, Login },
+  components: { TweetCard },
+
   data: () => ({
     links: ["Dashboard", "Messages", "Profile", "Updates"]
   })

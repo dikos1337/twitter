@@ -13,13 +13,20 @@ export default new Vuex.Store({
     isAuthenticated: false,
     jwt: localStorage.getItem("token"),
     endpoints: {
-      // TODO: Remove hardcoding of dev endpoints
-      obtainJWT: "http://127.0.0.1:8000/api/v1/auth/obtain_token/",
-      refreshJWT: "http://127.0.0.1:8000/api/v1/auth/refresh_token/",
-      baseUrl: "http://127.0.0.1:8000/api/v1/"
+      obtainJWT: "/api/v1/auth/obtain_token/",
+      refreshJWT: "/api/v1/auth/refresh_token/",
+      baseUrl: "/api/v1/"
     }
   },
+  // getters: {
+  //   isAuthenticated: () => {
+  //     return this.state.isAuthenticated;
+  //   }
+  // },
   mutations: {
+    // toggleStateFIXME(state) {
+    //   state.isAuthenticated = !state.isAuthenticated;
+    // },
     setAuthUser(state, { authUser, isAuthenticated }) {
       Vue.set(state, "authUser", authUser);
       Vue.set(state, "isAuthenticated", isAuthenticated);

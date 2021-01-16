@@ -51,6 +51,8 @@ export default {
     },
     login() {
       console.log("login request sended");
+      //   this.$store.commit("toggleStateFIXME");
+      this.$router.push({ name: "Feed" });
     },
     authenticate() {
       const payload = {

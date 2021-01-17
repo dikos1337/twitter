@@ -1,11 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import axios from "axios";
 
 Vue.use(Vuex);
-
-axios.defaults.xsrfCookieName = "csrftoken";
-axios.defaults.xsrfHeaderName = "X-CSRFToken";
 
 export default new Vuex.Store({
   state: {
@@ -18,11 +14,6 @@ export default new Vuex.Store({
       baseUrl: "/api/v1/"
     }
   },
-  // getters: {
-  //   isAuthenticated: () => {
-  //     return this.state.isAuthenticated;
-  //   }
-  // },
   mutations: {
     // toggleStateFIXME(state) {
     //   state.isAuthenticated = !state.isAuthenticated;

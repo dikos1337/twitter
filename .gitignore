@@ -2,7 +2,9 @@
 node_modules
 /dist
 backend/venv
+backend/avatars
 backend/db.sqlite3
+backend/*/migrations/*.py
 *__pycache__
 
 # local env files
@@ -23,3 +25,7 @@ pnpm-debug.log*
 *.njsproj
 *.sln
 *.sw?
+
+.gitignore
+
+backend/users/migrations/0001_initial.py

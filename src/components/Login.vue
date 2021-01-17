@@ -12,6 +12,7 @@
         :rules="passwordRules"
         label="Password"
         required
+        @keyup.enter="validate"
       >
       </v-text-field>
       <v-btn color="primary" class="mr-4" @click="validate">
@@ -50,20 +51,27 @@ export default {
       }
     },
     login() {
-      this.$axios("/accounts/login/", {
-        method: "POST",
-        headers: {
-          "content-type": "application/json"
-        },
-        data: {
-          // name: "namesad",
-          email: this.email,
-          password: this.password
-        }
-      });
-      //   this.$store.commit("toggleStateFIXME");
-
-      // this.$router.push({ name: "Feed" });
+      let context = this;
+      this.$axios
+        .post(
+          "/accounts/login/",
+          {
+            email: this.email,
+            password: this.password
+          },
+          {
+            headers: {
+              "content-type": "application/json"
+            }
+          }
+        )
+        .then(function(response) {
+          console.log(response);
+          context.$router.push({ name: "Feed" });
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
     }
     // authenticate() {
     //   const payload = {

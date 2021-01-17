@@ -59,6 +59,7 @@ export default {
       this.$refs.signUpForm.validate();
       if (this.valid) {
         this.signUp();
+        // TODO сделать сразу авторизацию и редирект на Feed
       }
     },
     signUp() {

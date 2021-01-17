@@ -2,8 +2,6 @@
   <v-app id="inspire">
     <v-app-bar app color="white" flat>
       <v-container class="py-0 fill-height">
-        <v-avatar class="mr-10" color="grey darken-1" size="32"></v-avatar>
-
         <v-btn v-for="link in links" :key="link" text :href="'#' + link">
           {{ link }}
         </v-btn>
@@ -11,14 +9,17 @@
         <v-spacer></v-spacer>
 
         <v-responsive max-width="260">
-          <v-text-field
+          <!-- <v-text-field
             dense
             flat
             hide-details
             rounded
             solo-inverted
-          ></v-text-field>
+          >
+          </v-text-field> -->
         </v-responsive>
+        <v-btn text>{{ username }}</v-btn>
+        <v-avatar class="mr-10" color="grey darken-1" size="32"></v-avatar>
       </v-container>
     </v-app-bar>
 
@@ -81,7 +82,25 @@ export default {
   components: { TweetCard },
 
   data: () => ({
-    links: ["Dashboard", "Messages", "Profile", "Updates"]
-  })
+    links: ["Dashboard", "Messages", "Profile", "Updates"],
+    username: "" // TODO наверно надо в стор закинуть
+  }),
+  mounted() {
+    // this.property = 'Example property update.'
+    // console.log("created");
+    // let context = this;
+    this.$axios
+      .get("/accounts/current")
+      .then(function(response) {
+        console.log(response);
+        // if (response.status == 200) {
+        this.username = response.data.name;
+        // TODO maybe надо данные в стор закидывать
+        // }
+      })
+      .catch(() => {
+        // context.$router.push({ name: "Home" });
+      });
+  }
 };
 </script>

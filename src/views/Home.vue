@@ -13,7 +13,6 @@
             <span class="headline">User Profile</span>
           </v-card-title>
           <SignUp v-if="signupDialog" />
-          <Login v-if="loginDialog" />
         </v-card>
       </v-dialog>
       <v-dialog v-model="loginDialog" persistent max-width="600px">
@@ -32,6 +31,10 @@
     ><br />
     <v-btn color="blue" @click="axiosCall">
       Axios call
+    </v-btn>
+    <br />
+    <v-btn color="blue" @click="logout">
+      logout
     </v-btn>
   </div>
 </template>
@@ -59,7 +62,30 @@ export default {
   methods: {
     axiosCall() {
       console.log("axiosCall");
+      this.$router.push({ name: "Feed" });
+    },
+    logout() {
+      this.$axios
+        .post("/accounts/logout/")
+        .then(response => {
+          console.log(response.data);
+        })
+        .catch(error => {
+          console.log(error);
+        });
     }
+  },
+  created() {
+    // this.property = 'Example property update.'
+    // console.log("created");
+    let context = this;
+    this.$axios.get("/accounts/current").then(function(response) {
+      console.log(response.status);
+      if (response.status == 200) {
+        context.$router.push({ name: "Feed" });
+        // TODO maybe надо данные в стор закидывать
+      }
+    });
   }
 };
 </script>

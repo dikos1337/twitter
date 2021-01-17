@@ -62,7 +62,17 @@ export default {
       }
     },
     signUp() {
-      console.log("signUp request sended");
+      this.$axios("/accounts/register/", {
+        method: "POST",
+        headers: {
+          "content-type": "application/json"
+        },
+        data: {
+          name: this.name,
+          email: this.email,
+          password: this.password
+        }
+      });
     }
   }
 };

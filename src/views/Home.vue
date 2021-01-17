@@ -59,31 +59,6 @@ export default {
   methods: {
     axiosCall() {
       console.log("axiosCall");
-      this.$axios("/accounts/register/", {
-        method: "POST",
-        headers: {
-          "content-type": "application/json"
-        },
-        data: {
-          name: `some name`,
-          email: `test@test.com`,
-          password: "324824"
-        }
-      });
-
-      // axiosCall() {
-      //       console.log("axiosCall");
-      //       this.$axios("/accounts/login/", {
-      //         method: "POST",
-      //         headers: {
-      //           "content-type": "application/json"
-      //         },
-      //         data: {
-      //           // name: "namesad",
-      //           email: "test2@test.com",
-      //           password: "324824"
-      //         }
-      //       });
     }
   }
 };

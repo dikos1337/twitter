@@ -18,7 +18,7 @@
           >
           </v-text-field> -->
         </v-responsive>
-        <v-btn text>{{ username }}</v-btn>
+        <v-btn text>{{ name }}</v-btn>
         <v-avatar class="mr-10" color="grey darken-1" size="32"></v-avatar>
       </v-container>
     </v-app-bar>
@@ -42,8 +42,10 @@
                     <v-list-item-title>
                       Refresh
                     </v-list-item-title>
-                  </v-list-item-content>
-                </v-list-item>
+                  </v-list-item-content> </v-list-item
+                ><v-list-item-content>
+                  <LogoutBtn />
+                </v-list-item-content>
               </v-list>
             </v-sheet>
           </v-col>
@@ -75,32 +77,38 @@
 // import SignUp from "@/components/SignUp.vue";
 // import Login from "@/components//Login.vue";
 import TweetCard from "@/components//TweetCard.vue";
+import LogoutBtn from "@/components//LogoutBtn.vue";
 
 export default {
   name: "Home",
   // components: { SignUp, Login },
-  components: { TweetCard },
+  components: { TweetCard, LogoutBtn },
 
   data: () => ({
     links: ["Dashboard", "Messages", "Profile", "Updates"],
-    username: "" // TODO наверно надо в стор закинуть
+    // username: "" // TODO наверно надо в стор закинуть
+    name: "ad"
   }),
+  methods: {},
   mounted() {
     // this.property = 'Example property update.'
     // console.log("created");
-    // let context = this;
+    let context = this;
+
     this.$axios
       .get("/accounts/current")
       .then(function(response) {
-        console.log(response);
-        // if (response.status == 200) {
-        this.username = response.data.name;
-        // TODO maybe надо данные в стор закидывать
-        // }
+        context.$store.dispatch("SET_NAME", {
+          name: response.data.name,
+          isAuthenticated: true
+        });
+        console.log("current", response);
+        context.name = response.data.name; // Может быть брать из стора
       })
       .catch(() => {
-        // context.$router.push({ name: "Home" });
+        context.$router.push({ name: "Home" });
       });
+    // this.name = this.$store.state.authUser.name;
   }
 };
 </script>

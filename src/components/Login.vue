@@ -67,6 +67,10 @@ export default {
         )
         .then(function(response) {
           console.log(response);
+          context.$store.dispatch("SET_NAME", {
+            name: response.data.name,
+            isAuthenticated: true
+          });
           context.$router.push({ name: "Feed" });
         })
         .catch(function(error) {

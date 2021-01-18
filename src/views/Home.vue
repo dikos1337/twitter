@@ -27,11 +27,8 @@
           </v-card-title>
           <Login v-if="loginDialog" />
         </v-card>
-      </v-dialog> </v-row
-    ><br />
-    <v-btn color="blue" @click="axiosCall">
-      Axios call
-    </v-btn>
+      </v-dialog>
+    </v-row>
     <br />
     <v-btn color="blue" @click="logout">
       logout
@@ -68,7 +65,7 @@ export default {
       this.$axios
         .post("/accounts/logout/")
         .then(response => {
-          console.log(response.data);
+          console.log("logout", response);
         })
         .catch(error => {
           console.log(error);

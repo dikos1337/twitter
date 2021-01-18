@@ -1,5 +1,5 @@
 <template>
-  <v-app id="inspire">
+  <v-app>
     <v-app-bar app color="white" flat>
       <v-container class="py-0 fill-height">
         <LogoutBtn />
@@ -54,7 +54,7 @@ export default {
   data: () => ({
     name: ""
   }),
-  methods() {},
+  methods: {},
   mounted() {
     let context = this;
 

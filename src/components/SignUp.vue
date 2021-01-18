@@ -64,7 +64,7 @@ export default {
     },
     signUp(name, email, password) {
       let context = this;
-      this.$axios("/accounts/register/", {
+      this.$axios(context.$store.state.apiUrls.accounts.register, {
         method: "POST",
         headers: {
           "content-type": "application/json"

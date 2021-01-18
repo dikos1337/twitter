@@ -88,7 +88,7 @@ export default {
     let context = this;
 
     this.$axios
-      .get("/accounts/current")
+      .get(context.$store.state.apiUrls.accounts.current)
       .then(function(response) {
         console.log("current", response);
         context.name = response.data.name; // Может быть брать из стора

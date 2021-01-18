@@ -5,33 +5,41 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    authUser: {
-      name: "store name"
-    },
-    isAuthenticated: false
+    apiUrls: {
+      accounts: {
+        login: "/accounts/login/",
+        register: "/accounts/register/",
+        current: "/accounts/current/",
+        logout: "/accounts/logout/"
+      }
+    }
+    // authUser: {
+    //   name: "store name"
+    // },
+    // isAuthenticated: false
   },
   mutations: {
     // setAuthUser(state, { authUser, isAuthenticated }) {
     //   Vue.set(state, "authUser", authUser);
     //   Vue.set(state, "isAuthenticated", isAuthenticated);
     // }
-    SET_NAME: (state, { name, isAuthenticated }) => {
-      state.authUser.name = name;
-      state.isAuthenticated = isAuthenticated;
-    }
+    // SET_NAME: (state, { name, isAuthenticated }) => {
+    //   state.authUser.name = name;
+    //   state.isAuthenticated = isAuthenticated;
+    // }
   },
   actions: {
-    SET_NAME: (context, payload) => {
-      context.commit("SET_NAME", payload);
-    }
+    // SET_NAME: (context, payload) => {
+    //   context.commit("SET_NAME", payload);
+    // }
   },
   getters: {
-    NAME: state => {
-      return state.authUser.name;
-    },
-    IS_AUTHENTICATED: state => {
-      return state.isAuthenticated;
-    }
+    // NAME: state => {
+    //   return state.authUser.name;
+    // },
+    // IS_AUTHENTICATED: state => {
+    //   return state.isAuthenticated;
+    // }
   },
   modules: {}
 });

@@ -10,7 +10,7 @@
         </template>
         <v-card>
           <v-card-title>
-            <span class="headline">User Profile</span>
+            <span class="headline">SignUp</span>
           </v-card-title>
           <SignUp v-if="signupDialog" />
         </v-card>
@@ -23,7 +23,7 @@
         </template>
         <v-card>
           <v-card-title>
-            <span class="headline">User Profile</span>
+            <span class="headline">Login</span>
           </v-card-title>
           <Login v-if="loginDialog" />
         </v-card>
@@ -54,8 +54,9 @@ export default {
 
   methods: {
     logout() {
+      let context = this;
       this.$axios
-        .post("/accounts/logout/")
+        .post(context.$store.state.apiUrls.accounts.logout)
         .then(response => {
           console.log("logout", response);
         })
@@ -66,12 +67,14 @@ export default {
   },
   created() {
     let context = this;
-    this.$axios.get("/accounts/current").then(function(response) {
-      console.log("current", response);
-      if (response.status == 200) {
-        context.$router.push({ name: "Feed" }).catch(() => {});
-      }
-    });
+    this.$axios
+      .get(context.$store.state.apiUrls.accounts.current)
+      .then(response => {
+        console.log("current", response);
+        if (response.status == 200) {
+          context.$router.push({ name: "Feed" }).catch(() => {});
+        }
+      });
   }
 };
 </script>

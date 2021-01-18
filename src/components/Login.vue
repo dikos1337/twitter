@@ -52,7 +52,7 @@ export default {
     },
     login(email, password) {
       let context = this;
-      this.$axios("/accounts/login/", {
+      this.$axios(context.$store.state.apiUrls.accounts.login, {
         method: "POST",
         headers: {
           "content-type": "application/json"

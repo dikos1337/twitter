@@ -24,5 +24,7 @@ from django.conf.urls import include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('users.urls')),  # new
+    path('api/v1/', include('tweets.urls')),  # new
+
     # path('', index_view, name='index'),  # new
 ]

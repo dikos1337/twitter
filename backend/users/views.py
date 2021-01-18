@@ -6,15 +6,15 @@ from rest_framework import (authentication, generics, permissions, response,
 from .serializers import LoginSerializer, UserSerializer
 
 
-class CsrfExemptSessionAuthentication(authentication.SessionAuthentication):
-    def enforce_csrf(self, request):
-        return
+# class CsrfExemptSessionAuthentication(authentication.SessionAuthentication):
+#     def enforce_csrf(self, request):
+#         return
 
 
 class LoginView(views.APIView):
     permission_classes = (permissions.AllowAny, )
     # SessionAuthentication maybe?
-    authentication_classes = (CsrfExemptSessionAuthentication, )
+    authentication_classes = (authentication.SessionAuthentication, )
 
     def post(self, request):
         serializer = LoginSerializer(data=request.data)

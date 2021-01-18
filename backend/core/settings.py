@@ -32,7 +32,7 @@ INSTALLED_APPS = [
     'django.contrib.admin', 'django.contrib.auth',
     'django.contrib.contenttypes', 'django.contrib.sessions',
     'django.contrib.messages', 'django.contrib.staticfiles', 'rest_framework',
-    'users'
+    'users', 'tweets'
 ]
 
 MIDDLEWARE = [
@@ -83,7 +83,8 @@ AUTH_USER_MODEL = 'users.User'
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME':
-        'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        'django.contrib.\
+            auth.password_validation.UserAttributeSimilarityValidator',
     },
     {
         'NAME':
@@ -116,9 +117,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/satic/'
-STATICFILES_DIRS = (
-    BASE_DIR.parent.joinpath('dist'),  # new
-)
+# STATICFILES_DIRS = (
+#     BASE_DIR.parent.joinpath('dist'),  # new
+# )
+
 REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': [
         'rest_framework.renderers.JSONRenderer',
@@ -127,12 +129,3 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.SessionAuthentication',
     ],
 }
-
-# CSRF_COOKIE_SAMESITE = 'Lax'
-# SESSION_COOKIE_SAMESITE = 'Lax'
-# CSRF_COOKIE_HTTPONLY = True
-# SESSION_COOKIE_HTTPONLY = True
-
-# PROD ONLY
-# CSRF_COOKIE_SECURE = True
-# SESSION_COOKIE_SECURE = True

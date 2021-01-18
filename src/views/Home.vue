@@ -37,12 +37,8 @@
 </template>
 
 <script>
-// @ is an alias to /src
 import SignUp from "@/components/SignUp.vue";
 import Login from "@/components//Login.vue";
-// import Cookies from "universal-cookie";
-
-// const cookies = new Cookies();
 
 export default {
   name: "Home",
@@ -57,10 +53,6 @@ export default {
   }),
 
   methods: {
-    axiosCall() {
-      console.log("axiosCall");
-      this.$router.push({ name: "Feed" });
-    },
     logout() {
       this.$axios
         .post("/accounts/logout/")
@@ -73,14 +65,11 @@ export default {
     }
   },
   created() {
-    // this.property = 'Example property update.'
-    // console.log("created");
     let context = this;
     this.$axios.get("/accounts/current").then(function(response) {
-      console.log(response.status);
+      console.log("current", response);
       if (response.status == 200) {
-        context.$router.push({ name: "Feed" });
-        // TODO maybe надо данные в стор закидывать
+        context.$router.push({ name: "Feed" }).catch(() => {});
       }
     });
   }

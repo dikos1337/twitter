@@ -19,6 +19,7 @@
         :rules="passwordRules"
         label="Password"
         required
+        @keyup.enter="validate"
       >
       </v-text-field>
       <v-btn color="primary" class="mr-4" @click="validate">
@@ -29,7 +30,7 @@
 </template>
 
 <script>
-// import axios from "axios";
+import Login from "@/components/Login.vue";
 
 export default {
   name: "SignUp",
@@ -50,7 +51,7 @@ export default {
     ],
     passwordRules: [
       v => !!v || "Password is required",
-      v => v.length >= 8 || "Password must be at least  8 characters"
+      v => v.length >= 6 || "Password must be at least 6 characters"
     ]
   }),
 
@@ -58,22 +59,27 @@ export default {
     validate() {
       this.$refs.signUpForm.validate();
       if (this.valid) {
-        this.signUp();
-        // TODO сделать сразу авторизацию и редирект на Feed
+        this.signUp(this.name, this.email, this.password);
       }
     },
-    signUp() {
+    signUp(name, email, password) {
+      let context = this;
       this.$axios("/accounts/register/", {
         method: "POST",
         headers: {
           "content-type": "application/json"
         },
-        data: {
-          name: this.name,
-          email: this.email,
-          password: this.password
-        }
-      });
+        data: { name, email, password }
+      })
+        .then(response => {
+          console.log("register", response);
+          if (response.status === 201) {
+            Login.methods.login.call(context, this.email, this.password);
+          }
+        })
+        .catch(error => {
+          console.log("register", error);
+        });
     }
   }
 };

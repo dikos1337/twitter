@@ -28,6 +28,9 @@ export default new Vuex.Store({
   getters: {
     NAME: state => {
       return state.authUser.name;
+    },
+    IS_AUTHENTICATED: state => {
+      return state.isAuthenticated;
     }
   },
   modules: {}

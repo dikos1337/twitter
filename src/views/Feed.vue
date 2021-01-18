@@ -72,43 +72,30 @@
 </template>
 
 <script>
-// @ is an alias to /src
-// import HelloWorld from "@/components/HelloWorld.vue";
-// import SignUp from "@/components/SignUp.vue";
-// import Login from "@/components//Login.vue";
 import TweetCard from "@/components//TweetCard.vue";
 import LogoutBtn from "@/components//LogoutBtn.vue";
 
 export default {
   name: "Home",
-  // components: { SignUp, Login },
   components: { TweetCard, LogoutBtn },
 
   data: () => ({
     links: ["Dashboard", "Messages", "Profile", "Updates"],
-    // username: "" // TODO наверно надо в стор закинуть
-    name: "ad"
+    name: ""
   }),
   methods: {},
   mounted() {
-    // this.property = 'Example property update.'
-    // console.log("created");
     let context = this;
 
     this.$axios
       .get("/accounts/current")
       .then(function(response) {
-        context.$store.dispatch("SET_NAME", {
-          name: response.data.name,
-          isAuthenticated: true
-        });
         console.log("current", response);
         context.name = response.data.name; // Может быть брать из стора
       })
       .catch(() => {
         context.$router.push({ name: "Home" });
       });
-    // this.name = this.$store.state.authUser.name;
   }
 };
 </script>

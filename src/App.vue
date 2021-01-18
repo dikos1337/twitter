@@ -1,20 +1,13 @@
 <template>
-  <div>
-    <router-view />
-  </div>
+  <router-view />
 </template>
 
 <script>
-// import HelloWorld from "./components/HelloWorld";
 export default {
   name: "App",
 
-  components: {
-    // HelloWorld
-  },
+  components: {},
 
-  data: () => ({
-    // links: ["Dashboard", "Messages", "Profile", "Updates"]
-  })
+  data: () => ({})
 };
 </script>

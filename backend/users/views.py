@@ -5,7 +5,6 @@ from rest_framework import (authentication, generics, permissions, response,
 
 from .serializers import LoginSerializer, UserSerializer
 
-
 # class CsrfExemptSessionAuthentication(authentication.SessionAuthentication):
 #     def enforce_csrf(self, request):
 #         return
@@ -41,6 +40,7 @@ class RegisterView(generics.CreateAPIView):
 
 
 class UserView(generics.RetrieveAPIView):
+    permission_classes = (permissions.IsAuthenticated, )
     serializer_class = UserSerializer
     lookup_field = 'pk'
 

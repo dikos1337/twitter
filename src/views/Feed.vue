@@ -1,26 +1,10 @@
 <template>
   <v-app>
-    <v-app-bar app color="white" flat>
-      <v-container class="py-0 fill-height">
-        <LogoutBtn />
-        <v-spacer></v-spacer>
+    <!-- <v-app-bar app color="white" flat>
+      
+    </v-app-bar> -->
 
-        <v-responsive max-width="260">
-          <!-- <v-text-field
-            dense
-            flat
-            hide-details
-            rounded
-            solo-inverted
-          >
-          </v-text-field> -->
-        </v-responsive>
-        <v-btn text>{{ name }}</v-btn>
-        <v-avatar class="mr-10" color="grey darken-1" size="32"></v-avatar>
-      </v-container>
-    </v-app-bar>
-
-    <v-main class="grey lighten-3">
+    <v-main class="fill-width grey lighten-4">
       <v-container>
         <v-row>
           <v-col cols="2">
@@ -28,8 +12,15 @@
           </v-col>
 
           <v-col>
-            <v-sheet min-height="70vh" rounded="lg">
-              <!--  -->
+            <v-sheet
+              min-height="70vh"
+              rounded="lg"
+              max-width="50%"
+              min-width="600px"
+            >
+              <MakeTweetField />
+
+              <LogoutBtn />
               <br />
               <TweetCard />
               <br />
@@ -49,7 +40,11 @@ import LeftSideBar from "@/components//LeftSideBar.vue";
 
 export default {
   name: "Home",
-  components: { TweetCard, LogoutBtn, LeftSideBar },
+  components: {
+    TweetCard,
+    LogoutBtn,
+    LeftSideBar
+  },
 
   data: () => ({
     name: ""

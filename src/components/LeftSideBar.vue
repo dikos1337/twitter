@@ -1,5 +1,10 @@
 <template>
-  <v-card height="100vh" min-width="200px" max-width="10vw">
+  <v-card
+    height="100vh"
+    min-width="200px"
+    max-width="10vw"
+    style="position: sticky; top: 0; overflow-y: auto;"
+  >
     <v-list color="transparent">
       <v-list-item v-for="link in links" :key="link.id" link>
         <v-list-item-content>

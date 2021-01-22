@@ -1,5 +1,5 @@
 <template>
-  <v-card height="100vh" min-width="10vw">
+  <v-card min-width="200px" max-width="10vw">
     <div class="TODO"></div>
   </v-card>
 </template>

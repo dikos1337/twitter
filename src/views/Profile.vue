@@ -1,25 +1,22 @@
 <template>
-  <v-main class="grey lighten-4">
-    <v-container>
-      <v-row>
-        <v-col cols="2">
+  <v-main>
+    <v-container pa-0 fluid style="max-width: 1000px; min-width: 450px">
+      <v-row class="mx-auto" no-gutters>
+        <v-col cols="auto">
           <LeftSideBar />
         </v-col>
-
         <v-col>
-          <v-sheet
-            min-height="70vh"
-            rounded="lg"
-            max-width="50%"
-            min-width="600px"
-          >
+          <v-container height="100vh" min-width="200px" xs8>
             <ProfileHeader />
             <LogoutBtn />
             <br />
             <TweetCard />
             <br />
             <TweetCard />
-          </v-sheet>
+          </v-container>
+        </v-col>
+        <v-col cols="auto">
+          <RightSideBar />
         </v-col>
       </v-row>
     </v-container>
@@ -27,14 +24,18 @@
 </template>
 
 <script>
+import TweetCard from "@/components/TweetCard.vue";
 import LeftSideBar from "@/components/LeftSideBar.vue";
+import RightSideBar from "@/components/RightSideBar/RightSideBar.vue";
 import ProfileHeader from "@/components/Profile/ProfileHeader.vue";
 
 export default {
   name: "Home",
   components: {
     LeftSideBar,
-    ProfileHeader
+    ProfileHeader,
+    RightSideBar,
+    TweetCard
   },
   data() {
     return {

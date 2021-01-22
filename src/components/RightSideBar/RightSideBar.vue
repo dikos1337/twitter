@@ -1,4 +1,8 @@
-<template> <div class="TODO"></div></template>
+<template>
+  <v-card height="100vh" min-width="10vw">
+    <div class="TODO"></div>
+  </v-card>
+</template>
 
 <script>
 export default {

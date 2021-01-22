@@ -1,49 +1,40 @@
 <template>
-  <v-app>
-    <!-- <v-app-bar app color="white" flat>
-      
-    </v-app-bar> -->
-
-    <v-main class="fill-width grey lighten-4">
-      <v-container>
-        <v-row>
-          <v-col cols="2">
-            <LeftSideBar />
-          </v-col>
-
-          <v-col>
-            <v-sheet
-              min-height="70vh"
-              rounded="lg"
-              max-width="50%"
-              min-width="600px"
-            >
-              <MakeTweetField />
-
-              <LogoutBtn />
-              <br />
-              <TweetCard />
-              <br />
-              <TweetCard />
-            </v-sheet>
-          </v-col>
-        </v-row>
-      </v-container>
-    </v-main>
-  </v-app>
+  <v-main>
+    <v-container pa-0 fluid style="max-width: 1000px; min-width: 450px">
+      <v-row class="mx-auto" no-gutters>
+        <v-col cols="auto">
+          <LeftSideBar />
+        </v-col>
+        <v-col>
+          <v-container height="100vh" min-width="200px" xs8>
+            <LogoutBtn />
+            <br />
+            <TweetCard />
+            <br />
+            <TweetCard />
+          </v-container>
+        </v-col>
+        <v-col cols="auto">
+          <RightSideBar />
+        </v-col>
+      </v-row>
+    </v-container>
+  </v-main>
 </template>
 
 <script>
-import TweetCard from "@/components//TweetCard.vue";
-import LogoutBtn from "@/components//LogoutBtn.vue";
-import LeftSideBar from "@/components//LeftSideBar.vue";
+import TweetCard from "@/components/TweetCard.vue";
+import LogoutBtn from "@/components/LogoutBtn.vue";
+import LeftSideBar from "@/components/LeftSideBar.vue";
+import RightSideBar from "@/components/RightSideBar/RightSideBar.vue";
 
 export default {
   name: "Home",
   components: {
     TweetCard,
     LogoutBtn,
-    LeftSideBar
+    LeftSideBar,
+    RightSideBar
   },
 
   data: () => ({

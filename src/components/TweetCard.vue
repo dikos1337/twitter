@@ -1,7 +1,7 @@
 <template>
-  <v-card class="mx-auto" color="#26c6da" dark max-width="400">
+  <v-card class="mx-auto" color="grey lighten-4">
     <v-card-title>
-      <v-icon large left>
+      <v-icon large left color="blue">
         mdi-twitter
       </v-icon>
       <span class="title font-weight-light">Twitter</span>

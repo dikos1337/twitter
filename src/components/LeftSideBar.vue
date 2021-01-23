@@ -6,7 +6,7 @@
     style="position: sticky; top: 0; overflow-y: auto;"
   >
     <v-list color="transparent">
-      <v-list-item v-for="link in links" :key="link.id" link>
+      <v-list-item v-for="link in links" :key="link.id" :to="link.url" link>
         <v-list-item-content>
           <v-list-item-title>
             <v-icon left color="blue"> {{ link.icon }} </v-icon>{{ link.name }}
@@ -28,20 +28,34 @@
 </template>
 
 <script>
+// let userSlug = "xE9nPVP5MyXMdWF",
+
 export default {
   name: "LeftSideBar",
 
-  data: () => ({
-    // TODO: Добавить ссылки на страницу в список
-    links: [
-      { id: 1, name: "Home", icon: "mdi-home-variant" },
-      { id: 2, name: "Explore", icon: "mdi-pound" },
-      { id: 3, name: "Notifications", icon: "mdi-bell" },
-      { id: 4, name: "Messages", icon: "mdi-email" },
-      { id: 5, name: "Bookmarks", icon: "mdi-bookmark" },
-      { id: 6, name: "Lists", icon: "mdi-format-list-bulleted" },
-      { id: 7, name: "Profile", icon: "mdi-account" }
-    ]
-  })
+  data() {
+    return {
+      // TODO: Добавить ссылки на страницу в список
+      links: [
+        { id: 1, name: "Home", icon: "mdi-home-variant", url: "/feed" },
+        { id: 2, name: "Explore", icon: "mdi-pound", url: "/explore" },
+        {
+          id: 3,
+          name: "Notifications",
+          icon: "mdi-bell",
+          url: "/notifications"
+        },
+        { id: 4, name: "Messages", icon: "mdi-email", url: "/messages" },
+        { id: 5, name: "Bookmarks", icon: "mdi-bookmark", url: "/bookmarks" },
+        {
+          id: 6,
+          name: "Lists",
+          icon: "mdi-format-list-bulleted",
+          url: "/explore/"
+        },
+        { id: 7, name: "Profile", icon: "mdi-account", url: `/${"userSlug"}` }
+      ]
+    };
+  }
 };
 </script>

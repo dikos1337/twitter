@@ -3,6 +3,7 @@ import VueRouter from "vue-router";
 import Home from "@/views/Home.vue";
 import Feed from "@/views/Feed.vue";
 import Profile from "@/views/Profile.vue";
+import TweetDetails from "@/views/TweetDetails.vue";
 
 Vue.use(VueRouter);
 
@@ -30,6 +31,11 @@ const routes = [
     path: "/:profileUrl",
     name: "Profile",
     component: Profile
+  },
+  {
+    path: "/:profileUrl/status/:tweetId",
+    name: "TweetDetails",
+    component: TweetDetails
   }
 ];
 

@@ -1,0 +1,51 @@
+<template>
+  <v-main>
+    <v-container pa-0 fluid style="max-width: 1000px; min-width: 450px">
+      <v-row class="mx-auto" no-gutters>
+        <v-col cols="auto">
+          <LeftSideBar />
+        </v-col>
+        <v-col>
+          <!-- <v-container height="100vh" min-width="200px" xs8> -->
+          <!-- <ProfileHeader /> -->
+          <v-list color="transparent">
+            <v-list-item v-for="n in 10" :key="n" link>
+              <v-list-item-content>
+                <!-- <TweetCard /> -->
+                {{ n }}
+              </v-list-item-content>
+            </v-list-item>
+          </v-list>
+          <!-- </v-container> -->
+        </v-col>
+        <v-col cols="auto">
+          <RightSideBar />
+        </v-col>
+      </v-row>
+    </v-container>
+  </v-main>
+</template>
+
+<script>
+// import TweetCard from "@/components/TweetCard.vue";
+import LeftSideBar from "@/components/LeftSideBar.vue";
+import RightSideBar from "@/components/RightSideBar/RightSideBar.vue";
+// import ProfileHeader from "@/components/Profile/ProfileHeader.vue";
+
+export default {
+  name: "TweetDetails",
+  components: {
+    LeftSideBar,
+    // ProfileHeader,
+    RightSideBar
+    // TweetCard
+  },
+  data() {
+    return {
+      // profileUrl: this.$route.params.profileUrl
+    };
+  },
+  methods: {},
+  mounted() {}
+};
+</script>

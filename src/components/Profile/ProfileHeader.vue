@@ -1,13 +1,22 @@
 <template>
-  <v-card>
-    <v-container class="py-2">
-      <v-avatar class="mr-10" color="grey darken-1" size="128"></v-avatar>
-      <v-spacer>{{ name }} </v-spacer>
-      <v-spacer>@xE9nPVP5MyX</v-spacer>
-      <v-spacer>Joined {{ joined_at }}</v-spacer>
-      <v-spacer>29 Following 0 Followers</v-spacer>
-    </v-container>
-  </v-card>
+  <v-container py-2>
+    <v-card flat>
+      <v-row>
+        <v-col cols="auto" class="pr-0">
+          <v-avatar color="blue darken-1" size="128" />
+        </v-col>
+        <v-col cols="auto" class="pa-0">
+          <v-card-title>{{ name }} </v-card-title>
+          <v-card-subtitle>@xE9nPVP5MyX</v-card-subtitle>
+          <v-card-text class="py-0">Joined {{ joined_at }}</v-card-text>
+          <v-card-text class="py-0">
+            29 Following 0 Followers
+            <!-- TODO FIX ME -->
+          </v-card-text>
+        </v-col>
+      </v-row>
+    </v-card>
+  </v-container>
 </template>
 
 <script>
@@ -20,7 +29,7 @@ export default {
       joined_at: ""
     };
   },
-  methods() {},
+  methods: {},
   mounted() {
     let context = this;
     let date_options = { year: "numeric", month: "long" };

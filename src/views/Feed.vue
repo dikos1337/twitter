@@ -30,7 +30,7 @@ import LeftSideBar from "@/components/LeftSideBar.vue";
 import RightSideBar from "@/components/RightSideBar/RightSideBar.vue";
 
 export default {
-  name: "Home",
+  name: "Feed",
   components: {
     TweetCard,
     LogoutBtn,

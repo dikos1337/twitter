@@ -28,14 +28,11 @@
 </template>
 
 <script>
-// let userSlug = "xE9nPVP5MyXMdWF",
-
 export default {
   name: "LeftSideBar",
 
   data() {
     return {
-      // TODO: Добавить ссылки на страницу в список
       links: [
         { id: 1, name: "Home", icon: "mdi-home-variant", url: "/feed" },
         { id: 2, name: "Explore", icon: "mdi-pound", url: "/explore" },
@@ -53,9 +50,19 @@ export default {
           icon: "mdi-format-list-bulleted",
           url: "/explore/"
         },
-        { id: 7, name: "Profile", icon: "mdi-account", url: `/${"userSlug"}` }
+        {
+          id: 7,
+          name: "Profile",
+          icon: "mdi-account",
+          url: `/${this.userSlug}`
+        }
       ]
     };
+  },
+  mounted() {
+    let userSlug = "xE9nPVP5MyXMdWF"; // TODO: get from api
+    this.links[5].url = `#/${userSlug}/lists`; // TODO fix it in the future or delete
+    this.links[6].url = `/${userSlug}`;
   }
 };
 </script>

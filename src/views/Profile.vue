@@ -32,7 +32,7 @@ import RightSideBar from "@/components/RightSideBar/RightSideBar.vue";
 import ProfileHeader from "@/components/Profile/ProfileHeader.vue";
 
 export default {
-  name: "Home",
+  name: "Profile",
   components: {
     LeftSideBar,
     ProfileHeader,
@@ -41,9 +41,7 @@ export default {
   },
   data() {
     return {
-      profileUrl: this.$route.params.profileUrl,
-      name: "",
-      joined_at: ""
+      // profileUrl: this.$route.params.profileUrl
     };
   },
   methods: {},

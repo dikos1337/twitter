@@ -7,7 +7,7 @@
         </v-col>
         <v-col cols="auto" class="pa-0">
           <v-card-title>{{ name }} </v-card-title>
-          <v-card-subtitle>@xE9nPVP5MyX</v-card-subtitle>
+          <v-card-subtitle>@{{ profileUrl }}</v-card-subtitle>
           <v-card-text class="py-0">Joined {{ joined_at }}</v-card-text>
           <v-card-text class="py-0">
             29 Following 0 Followers

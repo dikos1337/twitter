@@ -11,6 +11,9 @@ export default new Vuex.Store({
         register: "/accounts/register/",
         current: "/accounts/current/",
         logout: "/accounts/logout/"
+      },
+      tweet: {
+        user: "/api/v1/tweet/user/"
       }
     }
     // authUser: {

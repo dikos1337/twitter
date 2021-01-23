@@ -41,10 +41,34 @@ export default {
   },
   data() {
     return {
-      // profileUrl: this.$route.params.profileUrl
+      userData: {},
+      userTweets: {}
     };
   },
   methods: {},
-  mounted() {}
+  created() {
+    /* FIX ME, запрос на /current/ уже происходит в ProfileHeader,
+       там надо закидывать эти данные в стор, а тут брать данные из стора */
+    let context = this;
+    this.$axios
+      .get(context.$store.state.apiUrls.accounts.current)
+      .then(response => {
+        this.userData = response.data;
+        console.log(this.userData);
+
+        context.$axios
+          .get(context.$store.state.apiUrls.tweet.user + context.userData.id)
+          .then(response => {
+            this.userTweets = response.data.tweets;
+            console.log("userTweets", this.userTweets);
+          })
+          .catch(error => {
+            console.log("/tweet/user/", error);
+          });
+      })
+      .catch(error => {
+        console.log("current", error);
+      });
+  }
 };
 </script>

@@ -1,5 +1,4 @@
-from rest_framework import generics, permissions, status, viewsets
-from rest_framework.generics import get_object_or_404
+from rest_framework import generics, permissions, status
 # from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -11,29 +10,28 @@ from tweets.serializers import (CreateTweetSerializer, DetailTweetSerializer,
 
 class CreateTweetView(generics.CreateAPIView):
     """Создание секрета"""
-    # queryset = Tweet.objects.all()
-    # serializer_class = CreateTweetSerializer
-    # permission_classes = [permissions.IsAuthenticated]
+    queryset = Tweet.objects.all()
+    serializer_class = CreateTweetSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
-    # def create(self, request, *args, **kwargs):
-    #     request.data._mutable = True
-    #     request.data['user'] = request.user.id
-    #     request.data._mutable = False
+    def perform_create(self, serializer, user):
+        # Добавляю к форме объект пользователя из сессии
+        serializer.save(**{"user": user})
 
-    #     serializer = self.get_serializer(data=request.data)
-    #     serializer.is_valid(raise_exception=True)
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
 
-    #     self.perform_create(serializer)
-    #     headers = self.get_success_headers(serializer.data)
-    #     return Response(serializer.data,
-    #                     status=status.HTTP_201_CREATED,
-    #                     headers=headers)
-    pass
+        self.perform_create(serializer, user=request.user)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data,
+                        status=status.HTTP_201_CREATED,
+                        headers=headers)
 
 
 class DetailTweetView(APIView):
     def get(self, request, pk):
-        tweets = get_object_or_404(Tweet, user=pk)
+        tweets = generics.get_object_or_404(Tweet, user=pk)
         serializer = DetailTweetSerializer(tweets, many=False)
 
         return Response(serializer.data, status=status.HTTP_200_OK)
@@ -64,7 +62,7 @@ class UserTweetsListView(APIView):
 
 #     def retrieve(self, request, pk=None):
 #         queryset = Tweet.objects.all()
-#         user = get_object_or_404(queryset, user=pk)
+#         user = generics.get_object_or_404(queryset, user=pk)
 #         serializer = UserTweetsListSerializer(user)
 #         return Response(serializer.data)
 

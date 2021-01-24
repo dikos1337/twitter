@@ -8,14 +8,24 @@
         <v-col>
           <!-- <v-container height="100vh" min-width="200px" xs8> -->
           <ProfileHeader />
-          <v-list color="transparent">
+          <v-list color="transparent" v-if="userTweets.length">
             <v-list-item v-for="tweet in userTweets" :key="tweet.id" link>
               <v-list-item-content>
-                <TweetCard :tweet="tweet"
-                :user-data="userData"
-                :profile-url="profileUrl" />
+                <TweetCard
+                  :tweet="tweet"
+                  :user-data="userData"
+                  :profile-url="profileUrl"
+                />
               </v-list-item-content>
             </v-list-item>
+          </v-list>
+          <v-list color="transparent" v-else>
+            <v-list-item-content
+              ><v-list-item>
+                Нет твитов
+                <!-- TODO FIXME придумать что нибудь -->
+              </v-list-item></v-list-item-content
+            >
           </v-list>
           <!-- </v-container> -->
         </v-col>

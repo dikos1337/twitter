@@ -19,10 +19,12 @@
 
     <v-card-actions>
       <v-list-item class="grow">
+        <span>{{ new Date(tweet.created).toLocaleString() }}</span>
         <v-row align="center" justify="end">
           <v-icon class="mr-1">
             mdi-heart
           </v-icon>
+
           <span class="subheading mr-2">{{ tweet.likes }}</span>
           <span class="mr-1">·</span>
           <v-icon class="mr-1">

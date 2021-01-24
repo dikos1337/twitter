@@ -13,7 +13,8 @@ export default new Vuex.Store({
         logout: "/accounts/logout/"
       },
       tweet: {
-        user: "/api/v1/tweet/user/"
+        user: "/api/v1/tweet/user/",
+        detail: "/api/v1/tweet/detail/"
       }
     }
     // authUser: {

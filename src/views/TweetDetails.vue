@@ -6,17 +6,17 @@
           <LeftSideBar />
         </v-col>
         <v-col>
-          <!-- <v-container height="100vh" min-width="200px" xs8> -->
-          <!-- <ProfileHeader /> -->
           <v-list color="transparent">
-            <v-list-item v-for="n in 10" :key="n" link>
+            <v-list-item>
               <v-list-item-content>
-                <!-- <TweetCard /> -->
-                {{ n }}
+                <TweetCard
+                  :tweet="tweet"
+                  :user-data="userData"
+                  :profile-url="profileUrl"
+                />
               </v-list-item-content>
             </v-list-item>
           </v-list>
-          <!-- </v-container> -->
         </v-col>
         <v-col cols="auto">
           <RightSideBar />
@@ -27,25 +27,49 @@
 </template>
 
 <script>
-// import TweetCard from "@/components/TweetCard.vue";
+import TweetCard from "@/components/TweetCard.vue";
 import LeftSideBar from "@/components/LeftSideBar.vue";
 import RightSideBar from "@/components/RightSideBar/RightSideBar.vue";
-// import ProfileHeader from "@/components/Profile/ProfileHeader.vue";
 
 export default {
   name: "TweetDetails",
   components: {
     LeftSideBar,
-    // ProfileHeader,
-    RightSideBar
-    // TweetCard
+    RightSideBar,
+    TweetCard
   },
   data() {
     return {
-      // profileUrl: this.$route.params.profileUrl
+      profileUrl: this.$route.params.profileUrl,
+      tweetId: this.$route.params.tweetId,
+      userData: {},
+      tweet: {}
     };
   },
   methods: {},
-  mounted() {}
+  created() {
+    /* FIX ME, запрос на /current/ уже происходил в ProfileHeader,
+       там надо закидывать эти данные в стор, а тут брать данные из стора */
+    let context = this;
+    this.$axios
+      .get(context.$store.state.apiUrls.accounts.current)
+      .then(response => {
+        this.userData = response.data;
+        console.log(this.userData);
+
+        context.$axios
+          .get(context.$store.state.apiUrls.tweet.detail + context.tweetId)
+          .then(response => {
+            this.tweet = response.data;
+            console.log("tweet", this.tweet);
+          })
+          .catch(error => {
+            console.log("/tweet/detail/", error);
+          });
+      })
+      .catch(error => {
+        console.log("current", error);
+      });
+  }
 };
 </script>

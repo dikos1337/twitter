@@ -11,7 +11,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField('Is staff', default=False)
     is_active = models.BooleanField('Is active', default=True)
     joined_at = models.DateTimeField('Joined at', default=timezone.now)
-
+    # slug = models.SlugField()  # TODO
     objects = UserManager()
 
     USERNAME_FIELD = 'email'

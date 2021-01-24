@@ -31,7 +31,7 @@ class CreateTweetView(generics.CreateAPIView):
 
 class DetailTweetView(APIView):
     def get(self, request, pk):
-        tweets = generics.get_object_or_404(Tweet, user=pk)
+        tweets = generics.get_object_or_404(Tweet, pk=pk)
         serializer = DetailTweetSerializer(tweets, many=False)
 
         return Response(serializer.data, status=status.HTTP_200_OK)
@@ -42,7 +42,7 @@ class UserTweetsListView(APIView):
 
     def get(self, request, pk):
         # TODO use slug instead pk
-        tweets = Tweet.objects.filter(user=pk)  # TODO except 404
+        tweets = Tweet.objects.filter(user=pk).order_by('-created')  # TODO except 404
         # paginator = PageNumberPagination()
         # result_page = paginator.paginate_queryset(tweets, request)
 

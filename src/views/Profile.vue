@@ -9,9 +9,11 @@
           <!-- <v-container height="100vh" min-width="200px" xs8> -->
           <ProfileHeader />
           <v-list color="transparent">
-            <v-list-item v-for="n in 10" :key="n" link>
+            <v-list-item v-for="tweet in userTweets" :key="tweet.id" link>
               <v-list-item-content>
-                <TweetCard />
+                <TweetCard :tweet="tweet"
+                :user-data="userData"
+                :profile-url="profileUrl" />
               </v-list-item-content>
             </v-list-item>
           </v-list>
@@ -41,6 +43,7 @@ export default {
   },
   data() {
     return {
+      profileUrl: this.$route.params.profileUrl,
       userData: {},
       userTweets: {}
     };

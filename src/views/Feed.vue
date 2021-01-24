@@ -10,7 +10,8 @@
           <v-list color="transparent">
             <v-list-item v-for="n in 10" :key="n" link>
               <v-list-item-content>
-                <TweetCard />
+                <!-- <TweetCard /> -->
+                TweetCard
               </v-list-item-content>
             </v-list-item>
           </v-list>
@@ -24,7 +25,7 @@
 </template>
 
 <script>
-import TweetCard from "@/components/TweetCard.vue";
+// import TweetCard from "@/components/TweetCard.vue";
 import LogoutBtn from "@/components/LogoutBtn.vue";
 import LeftSideBar from "@/components/LeftSideBar.vue";
 import RightSideBar from "@/components/RightSideBar/RightSideBar.vue";
@@ -32,7 +33,7 @@ import RightSideBar from "@/components/RightSideBar/RightSideBar.vue";
 export default {
   name: "Feed",
   components: {
-    TweetCard,
+    // TweetCard,
     LogoutBtn,
     LeftSideBar,
     RightSideBar

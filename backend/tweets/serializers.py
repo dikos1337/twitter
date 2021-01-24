@@ -6,7 +6,11 @@ from tweets.models import Tweet
 class CreateTweetSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tweet
-        fields = ('text', )
+        fields = (
+            'id',
+            'text',
+            'created',
+        )
 
 
 class DetailTweetSerializer(serializers.ModelSerializer):

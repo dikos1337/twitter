@@ -6,7 +6,7 @@
           <LeftSideBar />
         </v-col>
         <v-col>
-          <LogoutBtn />
+          <TweetInputForm />
           <v-list color="transparent">
             <v-list-item v-for="n in 10" :key="n" link>
               <v-list-item-content>
@@ -18,6 +18,7 @@
         </v-col>
         <v-col cols="auto">
           <RightSideBar />
+          <LogoutBtn />
         </v-col>
       </v-row>
     </v-container>
@@ -29,6 +30,7 @@
 import LogoutBtn from "@/components/LogoutBtn.vue";
 import LeftSideBar from "@/components/LeftSideBar.vue";
 import RightSideBar from "@/components/RightSideBar/RightSideBar.vue";
+import TweetInputForm from "@/components/TweetInputForm.vue";
 
 export default {
   name: "Feed",
@@ -36,7 +38,8 @@ export default {
     // TweetCard,
     LogoutBtn,
     LeftSideBar,
-    RightSideBar
+    RightSideBar,
+    TweetInputForm
   },
 
   data: () => ({

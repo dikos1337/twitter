@@ -14,7 +14,8 @@ export default new Vuex.Store({
       },
       tweet: {
         user: "/api/v1/tweet/user/",
-        detail: "/api/v1/tweet/detail/"
+        detail: "/api/v1/tweet/detail/",
+        create: "/api/v1/tweet/create/"
       }
     }
     // authUser: {

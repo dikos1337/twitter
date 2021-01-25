@@ -3,6 +3,7 @@ from django.db import models
 from django.utils import timezone
 
 from users.managers import UserManager
+from users.utils import unique_slug_generator
 
 
 class User(AbstractBaseUser, PermissionsMixin):
@@ -11,21 +12,15 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField('Is staff', default=False)
     is_active = models.BooleanField('Is active', default=True)
     joined_at = models.DateTimeField('Joined at', default=timezone.now)
-    # slug = models.SlugField()  # TODO
+    slug = models.SlugField(
+        blank=False, unique=True,
+        default=unique_slug_generator)  # TODO fix: may not be unique
+
     objects = UserManager()
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['name']
 
-    # def __str__(self):
-    #     return str(self.pk)
-
     class Meta:
         verbose_name = 'User'
         verbose_name_plural = 'Users'
-
-    def get_full_name(self):
-        return self.name
-
-    def get_short_name(self):
-        return self.name

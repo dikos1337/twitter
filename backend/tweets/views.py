@@ -1,7 +1,5 @@
 from rest_framework import generics, permissions, status
-from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
-from rest_framework.views import APIView
 
 from tweets.models import Tweet
 from tweets.serializers import CreateTweetSerializer, TweetSerializer
@@ -39,7 +37,7 @@ class UserTweetsListView(generics.ListAPIView):
     def get_queryset(self):
         # TODO except 404
         return Tweet.objects.filter(
-            user=self.kwargs['pk']).order_by('-created')
+            user__slug=self.kwargs['slug']).order_by('-created')
 
 
 class FeedTweetsListView(generics.ListAPIView):

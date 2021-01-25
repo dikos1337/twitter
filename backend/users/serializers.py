@@ -25,7 +25,7 @@ class LoginSerializer(serializers.Serializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('id', 'last_login', 'email', 'name', 'is_active',
+        fields = ('id', 'slug', 'last_login', 'email', 'name', 'is_active',
                   'joined_at', 'password')
         read_only_fields = ('last_login', 'is_active', 'joined_at')
         extra_kwargs = {
@@ -51,5 +51,21 @@ class UserSerializer(serializers.ModelSerializer):
 class UserTweetSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('id', 'name')  # TODO: add slug
-        extra_kwargs = {'id': {'read_only': True}, 'name': {'read_only': True}}
+        fields = ('id', 'name', 'slug')
+        extra_kwargs = {
+            'id': {
+                'read_only': True
+            },
+            'name': {
+                'read_only': True
+            },
+            'slug': {
+                'read_only': True
+            }
+        }
+
+
+class UserProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('id', 'name', 'slug', 'joined_at')

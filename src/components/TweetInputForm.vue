@@ -55,6 +55,7 @@ export default {
         .catch(error => {
           console.log("create error", error);
         });
+      // TODO redirect to details view
     }
   }
 };

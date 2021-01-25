@@ -4,7 +4,9 @@ from users.models import User
 
 # Create your models here.
 class Tweet(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User,
+                             on_delete=models.CASCADE,
+                             related_name="tweets")
     text = models.CharField(max_length=300, blank=False)
     created = models.DateTimeField(auto_now=True)
     likes = models.PositiveIntegerField(default=0)

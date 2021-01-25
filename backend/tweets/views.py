@@ -1,11 +1,10 @@
 from rest_framework import generics, permissions, status
-# from rest_framework.pagination import PageNumberPagination
+from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from tweets.models import Tweet
-from tweets.serializers import (CreateTweetSerializer, DetailTweetSerializer,
-                                UserTweetsListSerializer)
+from tweets.serializers import CreateTweetSerializer, TweetSerializer
 
 
 class CreateTweetView(generics.CreateAPIView):
@@ -29,42 +28,25 @@ class CreateTweetView(generics.CreateAPIView):
                         headers=headers)
 
 
-class DetailTweetView(APIView):
-    def get(self, request, pk):
-        tweets = generics.get_object_or_404(Tweet, pk=pk)
-        serializer = DetailTweetSerializer(tweets, many=False)
-
-        return Response(serializer.data, status=status.HTTP_200_OK)
+class DetailTweetView(generics.RetrieveAPIView):
+    serializer_class = TweetSerializer
+    queryset = Tweet.objects.all()
 
 
-class UserTweetsListView(APIView):
-    # pagination_class = PageNumberPagination()
+class UserTweetsListView(generics.ListAPIView):
+    serializer_class = TweetSerializer
 
-    def get(self, request, pk):
-        # TODO use slug instead pk
-        tweets = Tweet.objects.filter(user=pk).order_by('-created')  # TODO except 404
-        # paginator = PageNumberPagination()
-        # result_page = paginator.paginate_queryset(tweets, request)
-
-        # serializer = UserTweetsListSerializer(result_page, many=True)
-        serializer = UserTweetsListSerializer(tweets, many=True)
-        return Response({"tweets": serializer.data}, status=status.HTTP_200_OK)
+    def get_queryset(self):
+        # TODO except 404
+        return Tweet.objects.filter(
+            user=self.kwargs['pk']).order_by('-created')
 
 
-# class UserTweetsListView(viewsets.ViewSet):
-#     """
-#     A simple ViewSet for listing or retrieving users.
-#     """
-#     def list(self, request, pk):
-#         queryset = Tweet.objects.all()
-#         serializer = UserTweetsListSerializer(queryset, many=True)
-#         return Response(serializer.data)
+class FeedTweetsListView(generics.ListAPIView):
+    # TODO Получать только свои и из подписок
+    queryset = Tweet.objects.all().order_by('-created')
+    serializer_class = TweetSerializer
 
-#     def retrieve(self, request, pk=None):
-#         queryset = Tweet.objects.all()
-#         user = generics.get_object_or_404(queryset, user=pk)
-#         serializer = UserTweetsListSerializer(user)
-#         return Response(serializer.data)
 
 # class TweetCommentsView(generics.ListAPIView):
 #     queryset = TweetComment.objects.all()

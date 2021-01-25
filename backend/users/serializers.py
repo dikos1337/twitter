@@ -46,3 +46,10 @@ class UserSerializer(serializers.ModelSerializer):
         return User.objects.create_user(validated_data.pop('email'),
                                         validated_data.pop('password'),
                                         **validated_data)
+
+
+class UserTweetSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('id', 'name')  # TODO: add slug
+        extra_kwargs = {'id': {'read_only': True}, 'name': {'read_only': True}}

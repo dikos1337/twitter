@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from users.serializers import UserTweetSerializer
 
 from tweets.models import Tweet
 
@@ -14,6 +15,8 @@ class CreateTweetSerializer(serializers.ModelSerializer):
 
 
 class TweetSerializer(serializers.ModelSerializer):
+    user = UserTweetSerializer()
+
     class Meta:
         model = Tweet
         fields = (

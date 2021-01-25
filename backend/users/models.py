@@ -3,7 +3,7 @@ from django.db import models
 from django.utils import timezone
 
 from users.managers import UserManager
-from users.utils import unique_slug_generator
+from users.utils import slug_save
 
 
 class User(AbstractBaseUser, PermissionsMixin):
@@ -12,9 +12,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField('Is staff', default=False)
     is_active = models.BooleanField('Is active', default=True)
     joined_at = models.DateTimeField('Joined at', default=timezone.now)
-    slug = models.SlugField(
-        blank=False, unique=True,
-        default=unique_slug_generator)  # TODO fix: may not be unique
+    slug = models.SlugField(blank=False, unique=True)
 
     objects = UserManager()
 
@@ -24,3 +22,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     class Meta:
         verbose_name = 'User'
         verbose_name_plural = 'Users'
+
+    def save(self, *args, **kwargs):
+        """ Add Slug creating/checking to save method. """
+        slug_save(self)
+        super(User, self).save(*args, **kwargs)

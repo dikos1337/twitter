@@ -7,13 +7,22 @@
         </v-col>
         <v-col>
           <TweetInputForm />
-          <v-list color="transparent">
-            <v-list-item v-for="n in 10" :key="n" link>
+          <v-list color="transparent" v-if="feedTweets.length">
+            <v-list-item v-for="tweet in feedTweets" :key="tweet.id" link>
               <v-list-item-content>
-                <!-- <TweetCard /> -->
-                TweetCard
+                <TweetCard :tweet="tweet" />
+                <!-- TODO: в твите будет slug field, надо будет поменять в TweetCard 
+                ссылку на пользователя, а в Profile.vue удалить profileUrl -->
               </v-list-item-content>
             </v-list-item>
+          </v-list>
+          <v-list color="transparent" v-else>
+            <v-list-item-content
+              ><v-list-item>
+                Нет твитов
+                <!-- TODO FIXME придумать что нибудь -->
+              </v-list-item></v-list-item-content
+            >
           </v-list>
         </v-col>
         <v-col cols="auto">
@@ -26,7 +35,7 @@
 </template>
 
 <script>
-// import TweetCard from "@/components/TweetCard.vue";
+import TweetCard from "@/components/TweetCard.vue";
 import LogoutBtn from "@/components/LogoutBtn.vue";
 import LeftSideBar from "@/components/LeftSideBar.vue";
 import RightSideBar from "@/components/RightSideBar/RightSideBar.vue";
@@ -35,7 +44,7 @@ import TweetInputForm from "@/components/TweetInputForm.vue";
 export default {
   name: "Feed",
   components: {
-    // TweetCard,
+    TweetCard,
     LogoutBtn,
     LeftSideBar,
     RightSideBar,
@@ -43,20 +52,20 @@ export default {
   },
 
   data: () => ({
-    name: ""
+    feedTweets: []
   }),
   methods: {},
-  mounted() {
+  created() {
     let context = this;
 
-    this.$axios
-      .get(context.$store.state.apiUrls.accounts.current)
-      .then(function(response) {
-        console.log("current", response);
-        context.name = response.data.name; // Может быть брать из стора
+    context.$axios
+      .get(context.$store.state.apiUrls.tweet.feed)
+      .then(response => {
+        this.feedTweets = response.data.results;
+        console.log("feedTweets", this.feedTweets);
       })
-      .catch(() => {
-        context.$router.push({ name: "Home" });
+      .catch(error => {
+        console.log("/tweet/feed/", error);
       });
   }
 };

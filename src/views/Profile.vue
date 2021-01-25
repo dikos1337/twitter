@@ -11,11 +11,7 @@
           <v-list color="transparent" v-if="userTweets.length">
             <v-list-item v-for="tweet in userTweets" :key="tweet.id" link>
               <v-list-item-content>
-                <TweetCard
-                  :tweet="tweet"
-                  :user-data="userData"
-                  :profile-url="profileUrl"
-                />
+                <TweetCard :tweet="tweet" :profile-url="profileUrl" />
               </v-list-item-content>
             </v-list-item>
           </v-list>
@@ -55,7 +51,7 @@ export default {
     return {
       profileUrl: this.$route.params.profileUrl,
       userData: {},
-      userTweets: {}
+      userTweets: []
     };
   },
   methods: {},
@@ -72,7 +68,7 @@ export default {
         context.$axios
           .get(context.$store.state.apiUrls.tweet.user + context.userData.id)
           .then(response => {
-            this.userTweets = response.data.tweets;
+            this.userTweets = response.data.results;
             console.log("userTweets", this.userTweets);
           })
           .catch(error => {

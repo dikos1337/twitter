@@ -9,7 +9,7 @@
         ></v-img>
       </v-list-item-avatar>
       <v-list-item-content>
-        <v-list-item-title>{{ userData.name }}</v-list-item-title>
+        <v-list-item-title>{{ tweet.user.name }}</v-list-item-title>
       </v-list-item-content>
     </v-card-title>
 
@@ -40,7 +40,7 @@
 <script>
 export default {
   name: "TweetCard",
-  props: { tweet: Object, userData: Object, profileUrl: String },
+  props: { tweet: Object, profileUrl: String },
   data: () => ({}),
   mounted() {}
 };

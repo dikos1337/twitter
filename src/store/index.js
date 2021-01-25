@@ -1,30 +1,10 @@
 import Vue from "vue";
 import Vuex from "vuex";
-
+import apiUrls from "./apiUrls";
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-  state: {
-    apiUrls: {
-      accounts: {
-        login: "/accounts/login/",
-        register: "/accounts/register/",
-        current: "/accounts/current/",
-        logout: "/accounts/logout/",
-        profile: "/accounts/profile/"
-      },
-      tweet: {
-        user: "/api/v1/tweet/user/",
-        detail: "/api/v1/tweet/detail/",
-        create: "/api/v1/tweet/create/",
-        feed: "/api/v1/tweet/feed/"
-      }
-    }
-    // authUser: {
-    //   name: "store name"
-    // },
-    // isAuthenticated: false
-  },
+  state: {},
   mutations: {
     // setAuthUser(state, { authUser, isAuthenticated }) {
     //   Vue.set(state, "authUser", authUser);
@@ -48,5 +28,7 @@ export default new Vuex.Store({
     //   return state.isAuthenticated;
     // }
   },
-  modules: {}
+  modules: {
+    apiUrls
+  }
 });

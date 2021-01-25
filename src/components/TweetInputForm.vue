@@ -15,11 +15,12 @@
 
     <v-btn
       color="blue lighten-1"
-      rounded
-      :disabled="!form.text.length"
       style="color:white"
-      large
       @click="valideteForm"
+      :disabled="!form.text.length"
+      depressed
+      rounded
+      large
     >
       Tweet
     </v-btn>

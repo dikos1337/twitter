@@ -15,15 +15,20 @@
       </v-list-item>
 
       <v-divider class="my-2"></v-divider>
-
-      <v-list-item link color="grey lighten-4">
-        <v-list-item-content>
-          <v-list-item-title>
-            Tweet
-          </v-list-item-title>
-        </v-list-item-content>
-      </v-list-item>
     </v-list>
+    <v-card-actions class="justify-center pa-0 ma-0">
+      <v-btn
+        color="blue lighten-1"
+        style="color:white;"
+        width="90%"
+        rounded
+        large
+        append
+        depressed
+      >
+        Tweet
+      </v-btn>
+    </v-card-actions>
   </v-card>
 </template>
 

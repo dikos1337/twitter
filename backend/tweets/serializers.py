@@ -13,19 +13,7 @@ class CreateTweetSerializer(serializers.ModelSerializer):
         )
 
 
-class DetailTweetSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Tweet
-        fields = (
-            'user',
-            'text',
-            'likes',
-            'reposts',
-            'created',
-        )
-
-
-class UserTweetsListSerializer(serializers.ModelSerializer):
+class TweetSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tweet
         fields = (

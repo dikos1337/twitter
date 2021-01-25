@@ -7,11 +7,11 @@
         </v-col>
         <v-col>
           <!-- <v-container height="100vh" min-width="200px" xs8> -->
-          <ProfileHeader />
+          <ProfileHeader :user-data="userData" />
           <v-list color="transparent" v-if="userTweets.length">
             <v-list-item v-for="tweet in userTweets" :key="tweet.id" link>
               <v-list-item-content>
-                <TweetCard :tweet="tweet" :profile-url="profileUrl" />
+                <TweetCard :tweet="tweet" />
               </v-list-item-content>
             </v-list-item>
           </v-list>
@@ -60,15 +60,20 @@ export default {
        там надо закидывать эти данные в стор, а тут брать данные из стора */
     let context = this;
     this.$axios
-      .get(context.$store.state.apiUrls.accounts.current)
+      .get(context.$store.state.apiUrls.accounts.profile + context.profileUrl)
       .then(response => {
         this.userData = response.data;
-        console.log(this.userData);
+        console.log("userData", this.userData);
 
         context.$axios
-          .get(context.$store.state.apiUrls.tweet.user + context.userData.id)
+          .get(context.$store.state.apiUrls.tweet.user + context.userData.slug)
           .then(response => {
             this.userTweets = response.data.results;
+            let date_options = { year: "numeric", month: "long" };
+            this.userData.joined_at = new Date(
+              this.userData.joined_at
+            ).toLocaleDateString("en-US", date_options);
+
             console.log("userTweets", this.userTweets);
           })
           .catch(error => {
@@ -76,7 +81,8 @@ export default {
           });
       })
       .catch(error => {
-        console.log("current", error);
+        console.log("accounts.profile + context.profileUrl", error);
+        // TODO redirect to 404
       });
   }
 };

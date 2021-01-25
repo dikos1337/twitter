@@ -1,5 +1,5 @@
 <template>
-  <v-card class="mx-auto" flat :href="`/${profileUrl}/status/${tweet.id}`">
+  <v-card class="mx-auto" flat :href="`/${tweet.user.slug}/status/${tweet.id}`">
     <v-card-title>
       <v-list-item-avatar color="grey darken-3">
         <v-img
@@ -40,7 +40,7 @@
 <script>
 export default {
   name: "TweetCard",
-  props: { tweet: Object, profileUrl: String },
+  props: { tweet: Object },
   data: () => ({}),
   mounted() {}
 };

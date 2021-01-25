@@ -3,7 +3,9 @@ from django.contrib.auth import login, logout
 from rest_framework import (authentication, generics, permissions, response,
                             views)
 
-from .serializers import LoginSerializer, UserSerializer
+from users.serializers import (LoginSerializer, UserProfileSerializer,
+                               UserSerializer)
+from users.models import User
 
 # class CsrfExemptSessionAuthentication(authentication.SessionAuthentication):
 #     def enforce_csrf(self, request):
@@ -48,3 +50,13 @@ class UserView(generics.RetrieveAPIView):
 
     def get_object(self, *args, **kwargs):
         return self.request.user
+
+
+class UserProfileView(generics.RetrieveAPIView):
+    permission_classes = (permissions.IsAuthenticated, )
+    serializer_class = UserProfileSerializer
+    queryset = User.objects.all()
+    lookup_field = 'slug'
+
+    # def get_object(self, *args, **kwargs):
+    #     return self.request.user

@@ -10,7 +10,8 @@ export default new Vuex.Store({
         login: "/accounts/login/",
         register: "/accounts/register/",
         current: "/accounts/current/",
-        logout: "/accounts/logout/"
+        logout: "/accounts/logout/",
+        profile: "/accounts/profile/"
       },
       tweet: {
         user: "/api/v1/tweet/user/",

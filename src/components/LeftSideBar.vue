@@ -33,6 +33,8 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
   name: "LeftSideBar",
 
@@ -59,15 +61,25 @@ export default {
           id: 7,
           name: "Profile",
           icon: "mdi-account",
-          url: `/${this.userSlug}`
+          url: `/${this.getUserSlug}`
         }
       ]
     };
   },
-  mounted() {
-    let userSlug = "xE9nPVP5MyXMdWF"; // TODO: get from api
-    this.links[5].url = `#/${userSlug}/lists`; // TODO fix it in the future or delete
-    this.links[6].url = `/${userSlug}`;
+  computed: { ...mapGetters(["getUserSlug"]) },
+  methods: {
+    setUserSlug() {
+      this.links[5].url = `#/${this.getUserSlug}/lists`; // TODO fix it in the future or delete
+      this.links[6].url = `/${this.getUserSlug}`;
+    }
+  },
+  created() {
+    let interval = setInterval(() => {
+      if (this.getUserSlug) {
+        this.setUserSlug();
+        clearInterval(interval);
+      }
+    }, 200);
   }
 };
 </script>

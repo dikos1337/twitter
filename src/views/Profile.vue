@@ -38,6 +38,7 @@ import TweetCard from "@/components/TweetCard.vue";
 import LeftSideBar from "@/components/LeftSideBar.vue";
 import RightSideBar from "@/components/RightSideBar/RightSideBar.vue";
 import ProfileHeader from "@/components/Profile/ProfileHeader.vue";
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: "Profile",
@@ -54,36 +55,51 @@ export default {
       userTweets: []
     };
   },
-  methods: {},
+  methods: {
+    ...mapActions(["checkAuthentication"]),
+    fetchTweets() {
+      let context = this;
+      context.$axios
+        .get(context.$store.state.apiUrls.tweet.user + context.userData.slug)
+        .then(response => {
+          this.userTweets = response.data.results;
+          let date_options = { year: "numeric", month: "long" };
+          this.userData.joined_at = new Date(
+            this.userData.joined_at
+          ).toLocaleDateString("en-US", date_options);
+
+          console.log("userTweets", this.userTweets);
+        })
+        .catch(error => {
+          console.log("/tweet/user/", error);
+        });
+    },
+    fetchUserData() {
+      let context = this;
+      this.$axios
+        .get(context.$store.state.apiUrls.accounts.profile + context.profileUrl)
+        .then(response => {
+          this.userData = response.data;
+          console.log("userData", this.userData);
+
+          context.fetchTweets();
+        })
+        .catch(error => {
+          console.log("accounts.profile + context.profileUrl", error);
+          // TODO redirect to 404
+        });
+    }
+  },
+  computed: { ...mapGetters(["getIsAuthenticatedStatus"]) },
   created() {
+    // let context = this;
     /* FIX ME, запрос на /current/ уже происходит в ProfileHeader,
        там надо закидывать эти данные в стор, а тут брать данные из стора */
-    let context = this;
-    this.$axios
-      .get(context.$store.state.apiUrls.accounts.profile + context.profileUrl)
-      .then(response => {
-        this.userData = response.data;
-        console.log("userData", this.userData);
-
-        context.$axios
-          .get(context.$store.state.apiUrls.tweet.user + context.userData.slug)
-          .then(response => {
-            this.userTweets = response.data.results;
-            let date_options = { year: "numeric", month: "long" };
-            this.userData.joined_at = new Date(
-              this.userData.joined_at
-            ).toLocaleDateString("en-US", date_options);
-
-            console.log("userTweets", this.userTweets);
-          })
-          .catch(error => {
-            console.log("/tweet/user/", error);
-          });
-      })
-      .catch(error => {
-        console.log("accounts.profile + context.profileUrl", error);
-        // TODO redirect to 404
-      });
+    if (!this.getIsAuthenticatedStatus) {
+      this.checkAuthentication().then(this.fetchUserData());
+    } else {
+      this.fetchUserData();
+    }
   }
 };
 </script>

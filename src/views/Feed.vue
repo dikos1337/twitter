@@ -40,6 +40,7 @@ import LogoutBtn from "@/components/LogoutBtn.vue";
 import LeftSideBar from "@/components/LeftSideBar.vue";
 import RightSideBar from "@/components/RightSideBar/RightSideBar.vue";
 import TweetInputForm from "@/components/TweetInputForm.vue";
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: "Feed",
@@ -54,19 +55,29 @@ export default {
   data: () => ({
     feedTweets: []
   }),
-  methods: {},
+  methods: {
+    ...mapActions(["checkAuthentication"]),
+    fetchTweets() {
+      let context = this;
+      this.$axios
+        .get(context.$store.state.apiUrls.tweet.feed)
+        .then(response => {
+          this.feedTweets = response.data.results;
+          console.log("feedTweets", this.feedTweets);
+        })
+        .catch(error => {
+          console.log("/tweet/feed/", error);
+        });
+    }
+  },
+  computed: { ...mapGetters(["getIsAuthenticatedStatus"]) },
   created() {
-    let context = this;
-
-    context.$axios
-      .get(context.$store.state.apiUrls.tweet.feed)
-      .then(response => {
-        this.feedTweets = response.data.results;
-        console.log("feedTweets", this.feedTweets);
-      })
-      .catch(error => {
-        console.log("/tweet/feed/", error);
-      });
+    // TODO check authenticated if false then redirect
+    if (!this.getIsAuthenticatedStatus) {
+      this.checkAuthentication().then(this.fetchTweets());
+    } else {
+      this.fetchTweets();
+    }
   }
 };
 </script>

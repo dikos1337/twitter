@@ -1,5 +1,11 @@
 <template>
-  <v-card class="mx-auto" flat :href="`/${tweet.user.slug}/status/${tweet.id}`">
+  <!-- v-if="tweet.user" means won’t try to render unless tweet.user is defined -->
+  <v-card
+    v-if="tweet.user"
+    class="mx-auto"
+    flat
+    :to="`/${tweet.user.slug}/status/${tweet.id}`"
+  >
     <v-card-title>
       <v-list-item-avatar color="grey darken-3">
         <v-img

@@ -9,11 +9,7 @@
           <v-list color="transparent">
             <v-list-item>
               <v-list-item-content>
-                <TweetCard
-                  :tweet="tweet"
-                  :user-data="userData"
-                  :profile-url="profileUrl"
-                />
+                <TweetCard :tweet="tweet" />
               </v-list-item-content>
             </v-list-item>
           </v-list>

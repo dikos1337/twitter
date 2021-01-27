@@ -2,6 +2,7 @@ import Vue from "vue";
 import Vuex from "vuex";
 import apiUrls from "./apiUrls";
 import axios from "axios";
+import router from "@/router";
 
 Vue.use(Vuex);
 
@@ -26,25 +27,21 @@ export default new Vuex.Store({
       console.log("checkAuthentication context", context);
 
       if (context.state.isAuthenticated === false) {
-        // let context = this;
         axios
           .get(context.rootState.apiUrls.accounts.current)
           .then(response => {
             console.log("context.rootState.apiUrls.accounts.current");
-            // FIXME use mutations
             context.commit("setAuthUser", {
               authUser: response.data,
               isAuthenticated: true
             });
-            // context.state.authUser = response.data;
-            // context.state.isAuthenticated = true;
           })
           .catch(error => {
             console.error(
               "context.$store.state.apiUrls.accounts.current error",
               error
             );
-            // TODO redirect to /
+            router.push({ name: "Home" });
           });
       }
     }

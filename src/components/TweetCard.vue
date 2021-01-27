@@ -1,11 +1,6 @@
 <template>
   <!-- v-if="tweet.user" means won’t try to render unless tweet.user is defined -->
-  <v-card
-    v-if="tweet.user"
-    class="mx-auto"
-    flat
-    :to="`/${tweet.user.slug}/status/${tweet.id}`"
-  >
+  <v-card v-if="tweet.user" class="mx-auto" tile flat>
     <v-card-title>
       <v-list-item-avatar color="grey darken-3">
         <v-img
@@ -15,7 +10,12 @@
         ></v-img>
       </v-list-item-avatar>
       <v-list-item-content>
-        <v-list-item-title>{{ tweet.user.name }}</v-list-item-title>
+        <v-list-item-title
+          ><router-link :to="`/${tweet.user.slug}/`">{{
+            tweet.user.name
+          }}</router-link></v-list-item-title
+        >
+        <v-list-item-subtitle>@{{ tweet.user.slug }}</v-list-item-subtitle>
       </v-list-item-content>
     </v-card-title>
 
@@ -25,18 +25,27 @@
 
     <v-card-actions>
       <v-list-item class="grow">
-        <span>{{ new Date(tweet.created).toLocaleString() }}</span>
+        <span>
+          <router-link :to="`/${tweet.user.slug}/status/${tweet.id}`">
+            {{ new Date(tweet.created).toLocaleString() }}
+          </router-link>
+        </span>
         <v-row align="center" justify="end">
           <v-icon class="mr-1">
             mdi-heart
           </v-icon>
 
           <span class="subheading mr-2">{{ tweet.likes }}</span>
-          <span class="mr-1">·</span>
+
           <v-icon class="mr-1">
             mdi-share-variant
           </v-icon>
-          <span class="subheading">{{ tweet.reposts }}</span>
+          <span class="subheading mr-2">{{ tweet.reposts }}</span>
+          <v-icon class="mr-1">
+            mdi-comment
+          </v-icon>
+          <span class="subheading mr-2">{{ 0 }}</span>
+          <!-- FIXME replace 0 with tweet.comment.count -->
         </v-row>
       </v-list-item>
     </v-card-actions>
@@ -51,3 +60,31 @@ export default {
   mounted() {}
 };
 </script>
+
+<style scoped>
+a:link {
+  text-decoration: none;
+  color: inherit;
+}
+
+a:visited {
+  text-decoration: none;
+  color: inherit;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+a:active {
+  text-decoration: underline;
+}
+
+.v-card.v-sheet.theme--light {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12) !important;
+}
+/* .v-card__actions {
+  border-top: 1px solid rgba(0, 0, 0, 0.12) !important;
+  padding: 0px;
+} */
+</style>

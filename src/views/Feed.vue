@@ -8,7 +8,12 @@
         <v-col>
           <TweetInputForm />
           <v-list color="transparent" v-if="feedTweets.length">
-            <v-list-item v-for="tweet in feedTweets" :key="tweet.id" link>
+            <v-list-item
+              v-for="tweet in feedTweets"
+              :key="tweet.id"
+              :to="`/${tweet.user.slug}/status/${tweet.id}`"
+              class="pa-0"
+            >
               <v-list-item-content>
                 <TweetCard :tweet="tweet" />
               </v-list-item-content>
@@ -25,7 +30,6 @@
         </v-col>
         <v-col cols="auto">
           <RightSideBar />
-          <LogoutBtn />
         </v-col>
       </v-row>
     </v-container>
@@ -34,7 +38,6 @@
 
 <script>
 import TweetCard from "@/components/TweetCard.vue";
-import LogoutBtn from "@/components/LogoutBtn.vue";
 import LeftSideBar from "@/components/LeftSideBar.vue";
 import RightSideBar from "@/components/RightSideBar/RightSideBar.vue";
 import TweetInputForm from "@/components/TweetInputForm.vue";
@@ -44,7 +47,6 @@ export default {
   name: "Feed",
   components: {
     TweetCard,
-    LogoutBtn,
     LeftSideBar,
     RightSideBar,
     TweetInputForm

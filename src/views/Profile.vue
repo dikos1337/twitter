@@ -6,10 +6,14 @@
           <LeftSideBar />
         </v-col>
         <v-col>
-          <!-- <v-container height="100vh" min-width="200px" xs8> -->
           <ProfileHeader :user-data="userData" />
           <v-list color="transparent" v-if="userTweets.length">
-            <v-list-item v-for="tweet in userTweets" :key="tweet.id" link>
+            <v-list-item
+              v-for="tweet in userTweets"
+              :key="tweet.id"
+              :to="`/${tweet.user.slug}/status/${tweet.id}`"
+              class="pa-0"
+            >
               <v-list-item-content>
                 <TweetCard :tweet="tweet" />
               </v-list-item-content>
@@ -86,7 +90,7 @@ export default {
         })
         .catch(error => {
           console.log("accounts.profile + context.userSlug", error);
-          // TODO redirect to 404
+          context.$router.push({ name: "NotFound" });
         });
     }
   },

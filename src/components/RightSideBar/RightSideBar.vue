@@ -1,13 +1,29 @@
 <template>
-  <v-card min-width="200px" max-width="10vw">
-    <div class="TODO"></div>
+  <v-card
+    height="100vh"
+    min-width="200px"
+    max-width="10vw"
+    style="position: sticky; top: 0; overflow-y: auto;"
+    tile
+    flat
+  >
+    <div class="TODO"><LogoutBtn /></div>
   </v-card>
 </template>
 
 <script>
+import LogoutBtn from "@/components/LogoutBtn.vue";
+
 export default {
-  name: "RightSideBar"
+  name: "RightSideBar",
+  components: {
+    LogoutBtn
+  }
 };
 </script>
 
-<style></style>
+<style scoped>
+.v-card.v-sheet.theme--light {
+  border-left: 1px solid rgba(0, 0, 0, 0.12) !important;
+}
+</style>

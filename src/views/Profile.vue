@@ -92,13 +92,15 @@ export default {
   },
   computed: { ...mapGetters(["getIsAuthenticatedStatus"]) },
   created() {
-    // let context = this;
-    /* FIX ME, запрос на /current/ уже происходит в ProfileHeader,
-       там надо закидывать эти данные в стор, а тут брать данные из стора */
-    if (!this.getIsAuthenticatedStatus) {
-      this.checkAuthentication().then(this.fetchUserData());
-    } else {
+    if (this.getIsAuthenticatedStatus) {
       this.fetchUserData();
+    } else {
+      let interval = setInterval(() => {
+        if (this.getIsAuthenticatedStatus) {
+          this.fetchUserData();
+          clearInterval(interval);
+        }
+      }, 100);
     }
   }
 };

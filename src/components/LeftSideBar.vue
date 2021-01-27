@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: "LeftSideBar",
@@ -55,7 +55,7 @@ export default {
           id: 6,
           name: "Lists",
           icon: "mdi-format-list-bulleted",
-          url: "/explore/"
+          url: `/${this.getUserSlug}/lists`
         },
         {
           id: 7,
@@ -68,18 +68,26 @@ export default {
   },
   computed: { ...mapGetters(["getUserSlug"]) },
   methods: {
-    setUserSlug() {
-      this.links[5].url = `#/${this.getUserSlug}/lists`; // TODO fix it in the future or delete
-      this.links[6].url = `/${this.getUserSlug}`;
+    ...mapActions(["checkAuthentication"]),
+    setUserSlug(slug) {
+      this.links[5].url = `/${slug}/lists`;
+      this.links[6].url = `/${slug}`;
     }
   },
   created() {
-    let interval = setInterval(() => {
-      if (this.getUserSlug) {
-        this.setUserSlug();
-        clearInterval(interval);
-      }
-    }, 200);
+    if (!this.getIsAuthenticatedStatus) {
+      this.checkAuthentication().then(() => {
+        console.log("THEN this.getUserSlug ==", this.getUserSlug);
+        let interval = setInterval(() => {
+          if (this.getUserSlug) {
+            this.setUserSlug(this.getUserSlug);
+            clearInterval(interval);
+          }
+        }, 100);
+      });
+    } else {
+      this.setUserSlug(this.getUserSlug);
+    }
   }
 };
 </script>

@@ -40,22 +40,23 @@ const routes = [
     component: NotFound // TODO fix
   },
   {
-    path: "/:profileUrl/lists",
+    path: "/:userSlug/lists",
     name: "Lists",
     component: NotFound // TODO fix
   },
   {
-    path: "/:profileUrl",
+    path: "/:userSlug",
     name: "Profile",
     component: Profile
   },
   {
-    path: "/:profileUrl/status/:tweetId",
+    path: "/:userSlug/status/:tweetId",
     name: "TweetDetails",
     component: TweetDetails
   },
   {
     path: "*",
+    name: "NotFound",
     component: NotFound
   }
 ];

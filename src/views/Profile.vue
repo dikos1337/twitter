@@ -50,7 +50,7 @@ export default {
   },
   data() {
     return {
-      profileUrl: this.$route.params.profileUrl,
+      userSlug: this.$route.params.userSlug,
       userData: {},
       userTweets: []
     };
@@ -77,7 +77,7 @@ export default {
     fetchUserData() {
       let context = this;
       this.$axios
-        .get(context.$store.state.apiUrls.accounts.profile + context.profileUrl)
+        .get(context.$store.state.apiUrls.accounts.profile + context.userSlug)
         .then(response => {
           this.userData = response.data;
           console.log("userData", this.userData);
@@ -85,7 +85,7 @@ export default {
           context.fetchTweets();
         })
         .catch(error => {
-          console.log("accounts.profile + context.profileUrl", error);
+          console.log("accounts.profile + context.userSlug", error);
           // TODO redirect to 404
         });
     }

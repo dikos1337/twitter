@@ -11,8 +11,6 @@
             <v-list-item v-for="tweet in feedTweets" :key="tweet.id" link>
               <v-list-item-content>
                 <TweetCard :tweet="tweet" />
-                <!-- TODO: в твите будет slug field, надо будет поменять в TweetCard 
-                ссылку на пользователя, а в Profile.vue удалить profileUrl -->
               </v-list-item-content>
             </v-list-item>
           </v-list>

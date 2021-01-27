@@ -36,7 +36,7 @@ export default {
   },
   data() {
     return {
-      profileUrl: this.$route.params.profileUrl,
+      userSlug: this.$route.params.userSlug,
       tweetId: this.$route.params.tweetId,
       userData: {},
       tweet: {}
@@ -54,13 +54,17 @@ export default {
         console.log(this.userData);
 
         context.$axios
-          .get(context.$store.state.apiUrls.tweet.detail + context.tweetId)
+          .get(
+            context.$store.state.apiUrls.tweet.detail +
+              `${context.userSlug}/${context.tweetId}`
+          )
           .then(response => {
             this.tweet = response.data;
             console.log("tweet", this.tweet);
           })
           .catch(error => {
             console.log("/tweet/detail/", error);
+            context.$router.push({ name: "NotFound" });
           });
       })
       .catch(error => {

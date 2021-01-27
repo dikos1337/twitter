@@ -28,14 +28,15 @@ class CreateTweetView(generics.CreateAPIView):
 
 class DetailTweetView(generics.RetrieveAPIView):
     serializer_class = TweetSerializer
-    queryset = Tweet.objects.all()
+
+    def get_queryset(self):
+        return Tweet.objects.filter(user__slug=self.kwargs['slug'])
 
 
 class UserTweetsListView(generics.ListAPIView):
     serializer_class = TweetSerializer
 
     def get_queryset(self):
-        # TODO except 404
         return Tweet.objects.filter(
             user__slug=self.kwargs['slug']).order_by('-created')
 

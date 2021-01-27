@@ -7,7 +7,7 @@ urlpatterns = [
     path(r'tweet/create/', CreateTweetView.as_view()),
 
     # TODO tweet/detail/<str:slug>/<int:pk>
-    path(r'tweet/detail/<int:pk>', DetailTweetView.as_view()),
+    path(r'tweet/detail/<str:slug>/<int:pk>', DetailTweetView.as_view()),
 
     #
     path(r'tweet/user/<str:slug>', UserTweetsListView.as_view()),

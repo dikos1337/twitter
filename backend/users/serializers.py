@@ -35,6 +35,9 @@ class UserSerializer(serializers.ModelSerializer):
             },
             'name': {
                 'required': True
+            },
+            'slug': {
+                'required': False
             }
         }
 

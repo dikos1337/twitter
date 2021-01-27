@@ -28,6 +28,8 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
   name: "TweetInputField",
   data: () => ({
@@ -35,6 +37,7 @@ export default {
       text: ""
     }
   }),
+  computed: { ...mapGetters(["getUserSlug"]) },
   methods: {
     valideteForm() {
       // TODO some validations
@@ -52,11 +55,14 @@ export default {
         .then(response => {
           console.log("create", response);
           context.form.text = ""; // clear input
+          context.$router.push({
+            name: "TweetDetails",
+            params: { tweetId: response.data.id, userSlug: context.getUserSlug }
+          }); // redirect to details view
         })
         .catch(error => {
           console.log("create error", error);
         });
-      // TODO redirect to details view
     }
   }
 };

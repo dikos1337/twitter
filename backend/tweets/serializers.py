@@ -5,6 +5,7 @@ from tweets.models import Tweet
 
 
 class CreateTweetSerializer(serializers.ModelSerializer):
+    """Create a tweet serializer"""
     class Meta:
         model = Tweet
         fields = (
@@ -15,6 +16,9 @@ class CreateTweetSerializer(serializers.ModelSerializer):
 
 
 class TweetSerializer(serializers.ModelSerializer):
+    """
+    Tweet serializer with detailed user information
+    """
     user = UserTweetSerializer()
 
     class Meta:

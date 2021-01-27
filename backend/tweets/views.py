@@ -6,7 +6,7 @@ from tweets.serializers import CreateTweetSerializer, TweetSerializer
 
 
 class CreateTweetView(generics.CreateAPIView):
-    """Создание секрета"""
+    """Create a tweet view"""
     queryset = Tweet.objects.all()
     serializer_class = CreateTweetSerializer
     permission_classes = [permissions.IsAuthenticated]
@@ -27,6 +27,10 @@ class CreateTweetView(generics.CreateAPIView):
 
 
 class DetailTweetView(generics.RetrieveAPIView):
+    """
+    Detailed view of a tweet with protection from
+    brute force using slug check
+    """
     serializer_class = TweetSerializer
 
     def get_queryset(self):
@@ -34,6 +38,9 @@ class DetailTweetView(generics.RetrieveAPIView):
 
 
 class UserTweetsListView(generics.ListAPIView):
+    """
+    Provides data about the tweets of a specific user
+    """
     serializer_class = TweetSerializer
 
     def get_queryset(self):
@@ -42,6 +49,10 @@ class UserTweetsListView(generics.ListAPIView):
 
 
 class FeedTweetsListView(generics.ListAPIView):
+    """
+    Provides data about the tweets of users on which
+    signed by the current user (not yet implemented)
+    """
     # TODO Получать только свои и из подписок
     queryset = Tweet.objects.all().order_by('-created')
     serializer_class = TweetSerializer

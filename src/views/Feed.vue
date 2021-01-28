@@ -14,7 +14,7 @@
               :to="`/${tweet.user.slug}/status/${tweet.id}`"
               class="pa-0"
             >
-              <v-list-item-content>
+              <v-list-item-content class="pa-0">
                 <TweetCard :tweet="tweet" />
               </v-list-item-content>
             </v-list-item>

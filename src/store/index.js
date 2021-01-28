@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import apiUrls from "./apiUrls";
+import tweetApi from "./tweetApi";
 import axios from "axios";
 import router from "@/router";
 
@@ -55,6 +56,7 @@ export default new Vuex.Store({
     }
   },
   modules: {
-    apiUrls
+    apiUrls,
+    tweetApi
   }
 });

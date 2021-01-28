@@ -49,45 +49,11 @@ export default {
   data() {
     return {
       userSlug: this.$route.params.userSlug,
-      tweetId: this.$route.params.tweetId,
-      userData: {},
-      tweet: {},
-      comments: {}
+      tweetId: this.$route.params.tweetId
     };
   },
   methods: {
     ...mapActions(["fetchTweetDetails", "fetchTweetComments"])
-    // fetchTweetDetails() {
-    //   let context = this;
-    //   this.$axios
-    //     .get(
-    //       context.$store.state.apiUrls.tweet.detail +
-    //         `${context.userSlug}/${context.tweetId}`
-    //     )
-    //     .then(response => {
-    //       this.tweet = response.data;
-    //       console.log("tweet", this.tweet);
-    //     })
-    //     .catch(error => {
-    //       console.log("/tweet/detail/", error);
-    //       context.$router.push({ name: "NotFound" });
-    //     });
-    // },
-    // fetchTweetComments() {
-    //   let context = this;
-    //   this.$axios
-    //     .get(
-    //       context.$store.state.apiUrls.tweet.comments +
-    //         `${context.userSlug}/${context.tweetId}`
-    //     )
-    //     .then(response => {
-    //       this.comments = response.data.results;
-    //       console.log("comments", this.comments);
-    //     })
-    //     .catch(error => {
-    //       console.log("/tweet/comments/", error);
-    //     });
-    // }
   },
   computed: {
     ...mapGetters([

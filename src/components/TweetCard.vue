@@ -1,7 +1,7 @@
 <template>
   <!-- v-if="tweet.user" means won’t try to render unless tweet.user is defined -->
   <v-card v-if="tweet.user" class="mx-auto" tile flat>
-    <v-card-title>
+    <v-card-title class="py-0">
       <v-list-item-avatar color="grey darken-3">
         <v-img
           class="elevation-6"
@@ -23,7 +23,7 @@
       {{ tweet.text }}
     </v-card-text>
 
-    <v-card-actions>
+    <v-card-actions class="py-0">
       <v-list-item class="grow">
         <span>
           <router-link :to="`/${tweet.user.slug}/status/${tweet.id}`">

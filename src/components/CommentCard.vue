@@ -1,34 +1,32 @@
 <template>
   <!-- TODO : Поменять дизайн  -->
   <v-card v-if="comment.user" class="mx-auto" tile flat>
-    <v-card-title>
-      <v-list-item-avatar color="grey darken-3">
+    <v-card-title class="py-0">
+      <v-list-item-avatar color="grey darken-3" size="32">
         <v-img
           class="elevation-6"
           alt=""
           src="https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light"
         ></v-img>
       </v-list-item-avatar>
-      <v-list-item-content>
-        <v-list-item-title>
+      <v-row align="center" justify="start">
+        <span class="subtitle-2 font-weight-black mr-1">
           <router-link :to="`/${comment.user.slug}/`">
             {{ comment.user.name }}
           </router-link>
-        </v-list-item-title>
-        <v-list-item-subtitle>@{{ comment.user.slug }}</v-list-item-subtitle>
-      </v-list-item-content>
+        </span>
+        <span class="caption  ">@{{ comment.user.slug }}</span>
+      </v-row>
     </v-card-title>
 
-    <v-card-text class="headline font-weight-bold">
+    <v-card-text class="font-weight-medium py-0">
       {{ comment.text }}
     </v-card-text>
 
-    <v-card-actions>
-      <v-list-item class="grow">
-        <span>
-          <router-link :to="`/${comment.user.slug}/status/${comment.id}`">
-            {{ new Date(comment.created).toLocaleString() }}
-          </router-link>
+    <v-card-actions class="py-0">
+      <v-list-item>
+        <span class="caption">
+          {{ new Date(comment.created).toLocaleString() }}
         </span>
         <v-row align="center" justify="end">
           <v-icon class="mr-1">
@@ -42,11 +40,10 @@
           </v-icon>
           <span class="subheading mr-2">{{ tweet.reposts }}</span> -->
 
-          <v-icon class="mr-1">
+          <!-- <v-icon class="mr-1">
             mdi-comment
           </v-icon>
-          <span class="subheading mr-2">{{ 0 }}</span>
-          <!-- FIXME replace 0 with tweet.comment.count -->
+          <span class="subheading mr-2">{{ 0 }}</span> -->
         </v-row>
       </v-list-item>
     </v-card-actions>

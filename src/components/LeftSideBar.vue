@@ -77,6 +77,9 @@ export default {
     }
   },
   created() {
+    /* TODO Возможно убрать проверку авторизации,
+    чтобы можно было смотреть твит или профиль без авторизации,
+    но тогда по другому рендерить список */
     if (!this.getIsAuthenticatedStatus) {
       this.checkAuthentication().then(() => {
         console.log("THEN this.getUserSlug ==", this.getUserSlug);

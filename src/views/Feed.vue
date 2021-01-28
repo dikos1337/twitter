@@ -72,7 +72,6 @@ export default {
   },
   computed: { ...mapGetters(["getIsAuthenticatedStatus"]) },
   created() {
-    // TODO check authenticated if false then redirect
     if (this.getIsAuthenticatedStatus) {
       this.fetchTweets();
     } else {

@@ -96,6 +96,8 @@ export default {
   },
   computed: { ...mapGetters(["getIsAuthenticatedStatus"]) },
   created() {
+    /* FIXME Возможно убрать проверку авторизации,
+    чтобы можно было смотреть профиль без авторизации */
     if (this.getIsAuthenticatedStatus) {
       this.fetchUserData();
     } else {

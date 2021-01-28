@@ -12,6 +12,15 @@
                 <TweetCard :tweet="tweet" />
               </v-list-item-content>
             </v-list-item>
+            <v-list-item
+              class="pa-0"
+              v-for="comment in comments"
+              :key="comment.id"
+            >
+              <v-list-item-content class="py-0">
+                <CommentCard :comment="comment" />
+              </v-list-item-content>
+            </v-list-item>
           </v-list>
         </v-col>
         <v-col cols="auto">
@@ -24,6 +33,7 @@
 
 <script>
 import TweetCard from "@/components/TweetCard.vue";
+import CommentCard from "@/components/CommentCard.vue";
 import LeftSideBar from "@/components/LeftSideBar.vue";
 import RightSideBar from "@/components/RightSideBar/RightSideBar.vue";
 
@@ -32,14 +42,16 @@ export default {
   components: {
     LeftSideBar,
     RightSideBar,
-    TweetCard
+    TweetCard,
+    CommentCard
   },
   data() {
     return {
       userSlug: this.$route.params.userSlug,
       tweetId: this.$route.params.tweetId,
       userData: {},
-      tweet: {}
+      tweet: {},
+      comments: {}
     };
   },
   methods: {},
@@ -47,12 +59,14 @@ export default {
     /* FIX ME, запрос на /current/ уже происходил в ProfileHeader,
        там надо закидывать эти данные в стор, а тут брать данные из стора */
     let context = this;
+    // FIXME Проверка авторизации это можно удалить
     this.$axios
       .get(context.$store.state.apiUrls.accounts.current)
       .then(response => {
         this.userData = response.data;
-        console.log(this.userData);
+        console.log("userData", this.userData);
 
+        // Запрос для получения информации от твите
         context.$axios
           .get(
             context.$store.state.apiUrls.tweet.detail +
@@ -66,6 +80,22 @@ export default {
             console.log("/tweet/detail/", error);
             context.$router.push({ name: "NotFound" });
           });
+
+        // Запрос для получения комментариев к твиту
+        context.$axios
+          .get(
+            context.$store.state.apiUrls.tweet.comments +
+              `${context.userSlug}/${context.tweetId}`
+          )
+          .then(response => {
+            this.comments = response.data.results;
+            console.log("comments", this.comments);
+          })
+          .catch(error => {
+            console.log("/tweet/comments/", error);
+          });
+
+        // FIXME catch проверки авторизации это надо удалить
       })
       .catch(error => {
         console.log("current", error);

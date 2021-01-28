@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from users.serializers import UserTweetSerializer
 
-from tweets.models import Tweet
+from tweets.models import Tweet, TweetComment
 
 
 class CreateTweetSerializer(serializers.ModelSerializer):
@@ -33,8 +33,23 @@ class TweetSerializer(serializers.ModelSerializer):
         )
 
 
-# class TweetCommentSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = TweetComment
-#         fields = '__all__'
-#         # fields = ('id', 'passphrase')
+class TweetShortSerializer(serializers.ModelSerializer):
+    """
+    Tweet serializer with detailed user information
+    """
+    user = UserTweetSerializer()
+
+    class Meta:
+        model = Tweet
+        fields = (
+            'id',
+            'user',
+        )
+
+
+class TweetCommentSerializer(serializers.ModelSerializer):
+    tweet = TweetShortSerializer()
+
+    class Meta:
+        model = TweetComment
+        fields = '__all__'

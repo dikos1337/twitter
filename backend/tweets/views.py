@@ -1,8 +1,9 @@
 from rest_framework import generics, permissions, status
 from rest_framework.response import Response
 
-from tweets.models import Tweet
-from tweets.serializers import CreateTweetSerializer, TweetSerializer
+from tweets.models import Tweet, TweetComment
+from tweets.serializers import (CreateTweetSerializer, TweetCommentSerializer,
+                                TweetSerializer)
 
 
 class CreateTweetView(generics.CreateAPIView):
@@ -58,6 +59,9 @@ class FeedTweetsListView(generics.ListAPIView):
     serializer_class = TweetSerializer
 
 
-# class TweetCommentsView(generics.ListAPIView):
-#     queryset = TweetComment.objects.all()
-#     serializer_class = TweetCommentSerializer
+class TweetCommentsView(generics.ListAPIView):
+    serializer_class = TweetCommentSerializer
+
+    def get_queryset(self):
+        return TweetComment.objects.filter(
+            tweet__user__slug=self.kwargs['slug'], tweet__id=self.kwargs['pk'])

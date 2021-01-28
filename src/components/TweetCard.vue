@@ -10,11 +10,11 @@
         ></v-img>
       </v-list-item-avatar>
       <v-list-item-content>
-        <v-list-item-title
-          ><router-link :to="`/${tweet.user.slug}/`">{{
-            tweet.user.name
-          }}</router-link></v-list-item-title
-        >
+        <v-list-item-title>
+          <router-link :to="`/${tweet.user.slug}/`">
+            {{ tweet.user.name }}
+          </router-link>
+        </v-list-item-title>
         <v-list-item-subtitle>@{{ tweet.user.slug }}</v-list-item-subtitle>
       </v-list-item-content>
     </v-card-title>
@@ -57,7 +57,7 @@ export default {
   name: "TweetCard",
   props: { tweet: Object },
   data: () => ({}),
-  mounted() {}
+  created() {}
 };
 </script>
 

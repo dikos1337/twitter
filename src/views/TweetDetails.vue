@@ -6,7 +6,13 @@
           <LeftSideBar />
         </v-col>
         <v-col>
-          <TweetCard :tweet="tweet" />
+          <v-list color="transparent" class="py-0">
+            <v-list-item class="pa-0">
+              <v-list-item-content class="py-0">
+                <TweetCard :tweet="tweet" />
+              </v-list-item-content>
+            </v-list-item>
+          </v-list>
         </v-col>
         <v-col cols="auto">
           <RightSideBar />

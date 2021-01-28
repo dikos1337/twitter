@@ -41,7 +41,7 @@ import TweetCard from "@/components/TweetCard.vue";
 import LeftSideBar from "@/components/LeftSideBar.vue";
 import RightSideBar from "@/components/RightSideBar/RightSideBar.vue";
 import TweetInputForm from "@/components/TweetInputForm.vue";
-import { mapGetters, mapActions } from "vuex";
+import { mapGetters } from "vuex";
 
 export default {
   name: "Feed",
@@ -56,7 +56,6 @@ export default {
     feedTweets: []
   }),
   methods: {
-    ...mapActions(["checkAuthentication"]),
     fetchTweets() {
       let context = this;
       this.$axios

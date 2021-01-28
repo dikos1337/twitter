@@ -11,7 +11,8 @@ export default {
       user: "/api/v1/tweet/user/",
       detail: "/api/v1/tweet/detail/",
       create: "/api/v1/tweet/create/",
-      feed: "/api/v1/tweet/feed/"
+      feed: "/api/v1/tweet/feed/",
+      comments: "/api/v1/tweet/comments/"
     }
   },
   mutations: {},

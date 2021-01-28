@@ -49,6 +49,7 @@ class TweetShortSerializer(serializers.ModelSerializer):
 
 class TweetCommentSerializer(serializers.ModelSerializer):
     tweet = TweetShortSerializer()
+    user = UserTweetSerializer()
 
     class Meta:
         model = TweetComment

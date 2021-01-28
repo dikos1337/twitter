@@ -36,6 +36,7 @@ import TweetCard from "@/components/TweetCard.vue";
 import CommentCard from "@/components/CommentCard.vue";
 import LeftSideBar from "@/components/LeftSideBar.vue";
 import RightSideBar from "@/components/RightSideBar/RightSideBar.vue";
+import { mapGetters } from "vuex";
 
 export default {
   name: "TweetDetails",
@@ -54,52 +55,55 @@ export default {
       comments: {}
     };
   },
-  methods: {},
+  methods: {
+    fetchTweetDetails() {
+      let context = this;
+      this.$axios
+        .get(
+          context.$store.state.apiUrls.tweet.detail +
+            `${context.userSlug}/${context.tweetId}`
+        )
+        .then(response => {
+          this.tweet = response.data;
+          console.log("tweet", this.tweet);
+        })
+        .catch(error => {
+          console.log("/tweet/detail/", error);
+          context.$router.push({ name: "NotFound" });
+        });
+    },
+    fetchTweetComments() {
+      let context = this;
+      this.$axios
+        .get(
+          context.$store.state.apiUrls.tweet.comments +
+            `${context.userSlug}/${context.tweetId}`
+        )
+        .then(response => {
+          this.comments = response.data.results;
+          console.log("comments", this.comments);
+        })
+        .catch(error => {
+          console.log("/tweet/comments/", error);
+        });
+    }
+  },
+  computed: { ...mapGetters(["getIsAuthenticatedStatus"]) },
   created() {
-    /* FIX ME, запрос на /current/ уже происходил в ProfileHeader,
-       там надо закидывать эти данные в стор, а тут брать данные из стора */
-    let context = this;
-    // FIXME Проверка авторизации это можно удалить
-    this.$axios
-      .get(context.$store.state.apiUrls.accounts.current)
-      .then(response => {
-        this.userData = response.data;
-        console.log("userData", this.userData);
-
-        // Запрос для получения информации от твите
-        context.$axios
-          .get(
-            context.$store.state.apiUrls.tweet.detail +
-              `${context.userSlug}/${context.tweetId}`
-          )
-          .then(response => {
-            this.tweet = response.data;
-            console.log("tweet", this.tweet);
-          })
-          .catch(error => {
-            console.log("/tweet/detail/", error);
-            context.$router.push({ name: "NotFound" });
-          });
-
-        // Запрос для получения комментариев к твиту
-        context.$axios
-          .get(
-            context.$store.state.apiUrls.tweet.comments +
-              `${context.userSlug}/${context.tweetId}`
-          )
-          .then(response => {
-            this.comments = response.data.results;
-            console.log("comments", this.comments);
-          })
-          .catch(error => {
-            console.log("/tweet/comments/", error);
-          });
-
-        // FIXME catch проверки авторизации это надо удалить
-      })
-      .catch(error => {
-        console.log("current", error);
-      });
+    /* FIXME Возможно убрать проверку авторизации,
+    чтобы можно было смотреть твит без авторизации */
+    if (this.getIsAuthenticatedStatus) {
+      this.fetchTweetDetails();
+      this.fetchTweetComments();
+    } else {
+      let interval = setInterval(() => {
+        if (this.getIsAuthenticatedStatus) {
+          this.fetchTweetDetails();
+          this.fetchTweetComments();
+          clearInterval(interval);
+        }
+      }, 100);
+    }
   }
 };
 </script>

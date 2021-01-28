@@ -19,6 +19,19 @@ export default {
     }
   },
   actions: {
+    fetchFeedTweets(context) {
+      axios
+        .get(context.rootState.apiUrls.tweet.feed)
+        .then(response => {
+          context.commit("setTweetsToRender", {
+            tweetsToRender: response.data.results
+          });
+          console.log("setTweetsToRender", response.data.results);
+        })
+        .catch(error => {
+          console.log("/tweet/feed/", error);
+        });
+    },
     fetchTweetDetails(context, { userSlug, tweetId }) {
       axios
         .get(context.rootState.apiUrls.tweet.detail + `${userSlug}/${tweetId}`)

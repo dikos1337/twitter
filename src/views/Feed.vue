@@ -7,9 +7,9 @@
         </v-col>
         <v-col>
           <TweetInputForm />
-          <v-list color="transparent" v-if="feedTweets.length">
+          <v-list color="transparent" v-if="getTweetsToRender.length">
             <v-list-item
-              v-for="tweet in feedTweets"
+              v-for="tweet in getTweetsToRender"
               :key="tweet.id"
               :to="`/${tweet.user.slug}/status/${tweet.id}`"
               class="pa-0"
@@ -41,7 +41,7 @@ import TweetCard from "@/components/TweetCard.vue";
 import LeftSideBar from "@/components/LeftSideBar.vue";
 import RightSideBar from "@/components/RightSideBar/RightSideBar.vue";
 import TweetInputForm from "@/components/TweetInputForm.vue";
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: "Feed",
@@ -52,31 +52,20 @@ export default {
     TweetInputForm
   },
 
-  data: () => ({
-    feedTweets: []
-  }),
+  data: () => ({}),
   methods: {
-    fetchTweets() {
-      let context = this;
-      this.$axios
-        .get(context.$store.state.apiUrls.tweet.feed)
-        .then(response => {
-          this.feedTweets = response.data.results;
-          console.log("feedTweets", this.feedTweets);
-        })
-        .catch(error => {
-          console.log("/tweet/feed/", error);
-        });
-    }
+    ...mapActions(["fetchFeedTweets"])
   },
-  computed: { ...mapGetters(["getIsAuthenticatedStatus"]) },
+  computed: {
+    ...mapGetters(["getIsAuthenticatedStatus", "getTweetsToRender"])
+  },
   created() {
     if (this.getIsAuthenticatedStatus) {
-      this.fetchTweets();
+      this.fetchFeedTweets();
     } else {
       let interval = setInterval(() => {
         if (this.getIsAuthenticatedStatus) {
-          this.fetchTweets();
+          this.fetchFeedTweets();
           clearInterval(interval);
         }
       }, 100);

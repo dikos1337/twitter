@@ -88,4 +88,7 @@ a:active {
   border-top: 1px solid rgba(0, 0, 0, 0.12) !important;
   padding: 0px;
 } */
+.v-card:hover {
+  background-color: rgba(33, 150, 243, 0.05);
+}
 </style>

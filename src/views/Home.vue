@@ -1,61 +1,87 @@
 <template>
-  <v-container fill-height>
-    <v-card class="mx-auto my-12" max-width="600" flat color="blue lighten-5">
-      <v-card-title>Узнайте, что происходит в мире прямо сейчас</v-card-title>
-      <v-card-text>Присоединяйтесь к Твиттеру прямо сейчас!</v-card-text>
-      <v-divider class="mx-4"></v-divider>
-      <div data-app>
-        <br />
-        <v-row justify="center">
-          <v-dialog v-model="signupDialog" persistent max-width="600px">
-            <template v-slot:activator="{ on, attrs }">
-              <v-btn color="primary" dark v-bind="attrs" v-on="on">
-                Sign Up
-              </v-btn>
-            </template>
-            <v-card>
-              <v-card-title>
-                <span class="headline">SignUp</span>
-              </v-card-title>
-              <SignUp v-if="signupDialog" />
+  <v-main>
+    <v-container ma-0 pa-0 fluid>
+      <v-row class="ma-0">
+        <v-row
+          align="center"
+          no-gutters
+          style="height: 100vh; background-color:rgba(29,161,242,1.00);"
+        >
+          <v-col class="leftsidecol">
+            <v-card class="leftsidecard" flat tile>
+              <v-card-text class="leftsidetext">
+                <v-icon color="white">mdi-magnify</v-icon>
+                Follow your interests.
+              </v-card-text>
+              <v-card-text class="leftsidetext">
+                <v-icon color="white">mdi-account-multiple</v-icon>
+                Hear what people are talking about.
+              </v-card-text>
+              <v-card-text class="leftsidetext">
+                <v-icon color="white">mdi-message-outline</v-icon>
+                Join the conversation.
+              </v-card-text>
             </v-card>
-          </v-dialog>
-          <v-dialog v-model="loginDialog" persistent max-width="600px">
-            <template v-slot:activator="{ on, attrs }">
-              <v-btn color="primary" dark v-bind="attrs" v-on="on">
-                Login
-              </v-btn>
-            </template>
-            <v-card>
-              <v-card-title>
-                <span class="headline">Login</span>
-              </v-card-title>
-              <Login v-if="loginDialog" />
-            </v-card>
-          </v-dialog>
+          </v-col>
         </v-row>
-        <br />
-        <!-- <LogoutBtn /> -->
-      </div>
-    </v-card>
-  </v-container>
+
+        <v-row class="ma-0" align="center">
+          <v-col class="rightsidecol">
+            <v-card flat>
+              <v-icon color="blue" size="48" class="ml-1">mdi-twitter</v-icon>
+              <v-card-text class="rightsidetext px-1">
+                See what’s happening in the world right now
+              </v-card-text>
+              <v-card-text class="rightsidetext small px-1">
+                Join Twitter today.
+              </v-card-text>
+              <v-btn
+                color="blue lighten-1"
+                style="color:white"
+                width="100%"
+                depressed
+                rounded
+                @click="toggleSignupDialogState"
+              >
+                Sign up
+              </v-btn>
+              <v-btn
+                color="blue lighten-1"
+                style="color:white"
+                width="100%"
+                depressed
+                rounded
+                outlined
+                @click="toggleLoginDialogState"
+              >
+                Log in
+              </v-btn>
+            </v-card>
+          </v-col>
+        </v-row>
+      </v-row>
+    </v-container>
+    <SignUpDialog />
+    <LoginDialog />
+  </v-main>
 </template>
 
 <script>
-import SignUp from "@/components/SignUp.vue";
-import Login from "@/components//Login.vue";
-// import LogoutBtn from "@/components//LogoutBtn.vue";
+import SignUpDialog from "@/components/SignUpDialog.vue";
+import LoginDialog from "@/components/LoginDialog.vue";
+import { mapMutations } from "vuex";
 
 export default {
   name: "Home",
-  components: { SignUp, Login },
-  data: () => ({
-    // dialog: false,
-    loginDialog: false,
-    signupDialog: false
-  }),
+  components: {
+    SignUpDialog,
+    LoginDialog
+  },
+  data: () => ({}),
+  methods: {
+    ...mapMutations(["toggleLoginDialogState", "toggleSignupDialogState"])
+  },
 
-  methods: {},
   created() {
     let context = this;
     this.$axios
@@ -72,3 +98,42 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.col {
+  width: 50vh;
+}
+.leftsidecol {
+  padding-left: 25% !important;
+  padding-right: 25% !important;
+}
+.rightsidecol {
+  padding-left: 30% !important;
+  padding-right: 30% !important;
+}
+.leftsidecard {
+  background-color: rgba(29, 161, 242, 1) !important;
+}
+.leftsidetext {
+  color: white !important;
+  font-weight: 700;
+  font-size: 19px;
+}
+.rightsidetext {
+  color: rgb(15, 20, 25) !important;
+  font-weight: 700;
+  font-size: 30px;
+  line-height: 1.3125;
+}
+.rightsidetext.small {
+  color: rgb(15, 20, 25) !important;
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 1.3125;
+  margin-top: 59px;
+  margin-bottom: 0px;
+}
+.v-btn {
+  margin-bottom: 15px;
+}
+</style>

@@ -8,9 +8,6 @@
       rows="1"
       auto-grow
     >
-      <!-- <template v-slot:label>
-      <div>Bio <small>(optional)</small></div>
-    </template> -->
     </v-textarea>
 
     <v-btn
@@ -28,7 +25,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapMutations } from "vuex";
 
 export default {
   name: "TweetInputField",
@@ -37,8 +34,9 @@ export default {
       text: ""
     }
   }),
-  computed: { ...mapGetters(["getUserSlug"]) },
+  computed: { ...mapGetters(["getUserSlug", "getDialogMakeTweetState"]) },
   methods: {
+    ...mapMutations(["toggleMakeTweetDialogState"]),
     valideteForm() {
       // TODO some validations
       this.sendTweet();
@@ -55,6 +53,11 @@ export default {
         .then(response => {
           console.log("create", response);
           context.form.text = ""; // clear input
+
+          // Если твит создавался из popup окна то его надо закрыть
+          if (context.getDialogMakeTweetState) {
+            context.toggleMakeTweetDialogState();
+          }
           context.$router.push({
             name: "TweetDetails",
             params: { tweetId: response.data.id, userSlug: context.getUserSlug }

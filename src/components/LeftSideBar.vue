@@ -27,19 +27,24 @@
         large
         append
         depressed
+        @click="toggleMakeTweetDialogState"
       >
         Tweet
       </v-btn>
     </v-card-actions>
+    <TweetInputFormDialog />
   </v-card>
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
+import { mapGetters, mapActions, mapMutations } from "vuex";
+import TweetInputFormDialog from "@/components/TweetInputFormDialog.vue";
 
 export default {
   name: "LeftSideBar",
-
+  components: {
+    TweetInputFormDialog
+  },
   data() {
     return {
       links: [
@@ -71,6 +76,7 @@ export default {
   computed: { ...mapGetters(["getUserSlug"]) },
   methods: {
     ...mapActions(["checkAuthentication"]),
+    ...mapMutations(["toggleMakeTweetDialogState"]),
     setUserSlug(slug) {
       this.links[5].url = `/${slug}/lists`;
       this.links[6].url = `/${slug}`;

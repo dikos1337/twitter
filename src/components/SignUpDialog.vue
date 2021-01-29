@@ -71,10 +71,10 @@ export default {
     ]
   }),
   computed: {
-    ...mapGetters(["getDialogLoginState", "getDialogSignupState"])
+    ...mapGetters(["getDialogSignupState"])
   },
   methods: {
-    ...mapMutations(["toggleLoginDialogState", "toggleSignupDialogState"]),
+    ...mapMutations(["toggleSignupDialogState"]),
     validate() {
       this.$refs.signUpForm.validate();
       if (this.valid) {

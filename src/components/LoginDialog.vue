@@ -57,10 +57,10 @@ export default {
     ]
   }),
   computed: {
-    ...mapGetters(["getDialogLoginState", "getDialogSignupState"])
+    ...mapGetters(["getDialogLoginState"])
   },
   methods: {
-    ...mapMutations(["toggleLoginDialogState", "toggleSignupDialogState"]),
+    ...mapMutations(["toggleLoginDialogState"]),
     validate() {
       this.$refs.loginForm.validate();
       if (this.valid) {
@@ -78,7 +78,9 @@ export default {
       })
         .then(response => {
           console.log("login", response);
-          context.toggleLoginDialogState();
+          if (context.getDialogLoginState == true) {
+            context.toggleLoginDialogState();
+          }
           context.$router.push({ name: "Feed" });
         })
         .catch(error => {

@@ -46,7 +46,7 @@
 
 <script>
 import { mapGetters, mapMutations } from "vuex";
-import Login from "@/components/Login.vue";
+import Login from "@/components/LoginDialog.vue";
 
 export default {
   name: "SignUpDialog",

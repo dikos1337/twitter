@@ -7,17 +7,23 @@
         </v-col>
         <v-col>
           <TweetInputForm />
-          <v-list color="transparent" v-if="getTweetsToRender.length">
-            <v-list-item
-              v-for="tweet in getTweetsToRender"
-              :key="tweet.id"
-              :to="`/${tweet.user.slug}/status/${tweet.id}`"
-              class="pa-0"
+          <v-list color="transparent" v-if="getTweetsToRender.count">
+            <div
+              v-infinite-scroll="loadMoreTweets"
+              infinite-scroll-disabled="isInfiniteScrollPossible"
+              infinite-scroll-distance="10"
             >
-              <v-list-item-content class="pa-0">
-                <TweetCard :tweet="tweet" />
-              </v-list-item-content>
-            </v-list-item>
+              <v-list-item
+                v-for="tweet in getTweetsToRender.results"
+                :key="tweet.id"
+                :to="`/${tweet.user.slug}/status/${tweet.id}`"
+                class="pa-0"
+              >
+                <v-list-item-content class="pa-0">
+                  <TweetCard :tweet="tweet" />
+                </v-list-item-content>
+              </v-list-item>
+            </div>
           </v-list>
           <v-list color="transparent" v-else>
             <v-list-item-content
@@ -52,12 +58,17 @@ export default {
     TweetInputForm
   },
 
-  data: () => ({}),
+  data: () => ({ busy: false }),
   methods: {
-    ...mapActions(["fetchFeedTweets"])
+    ...mapActions(["fetchFeedTweets", "loadMoreTweets"])
   },
   computed: {
-    ...mapGetters(["getIsAuthenticatedStatus", "getTweetsToRender"])
+    ...mapGetters(["getIsAuthenticatedStatus", "getTweetsToRender"]),
+    isInfiniteScrollPossible() {
+      /* Флаг для того, чтобы  Infinite Scroll 
+      перестал пытаться загрузить новые данные*/
+      return this.getTweetsToRender.next ? false : true;
+    }
   },
   created() {
     if (this.getIsAuthenticatedStatus) {

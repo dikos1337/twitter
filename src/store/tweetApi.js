@@ -3,7 +3,7 @@ import axios from "axios";
 
 export default {
   state: {
-    tweetsToRender: {},
+    feedTweets: {},
     commentsToRender: {},
     tweetDetails: {}
   },
@@ -14,28 +14,31 @@ export default {
     setCommentsToRender(state, { commentsToRender }) {
       Vue.set(state, "commentsToRender", commentsToRender);
     },
-    setTweetsToRender(state, { tweetsToRender }) {
-      let urlNext = new URL(tweetsToRender.next);
+    setFeedTweets(state, { feedTweets }) {
+      let urlNext = new URL(feedTweets.next);
       // let urlPrevious = new URL(tweetsToAppend.next) // FIX ME (condition) ? :
 
-      state.tweetsToRender = {
-        count: tweetsToRender.count,
+      state.feedTweets = {
+        count: feedTweets.count,
         next: urlNext.pathname + urlNext.search,
-        previous: tweetsToRender.previous,
-        results: tweetsToRender.results
+        previous: feedTweets.previous,
+        results: feedTweets.results
       };
     },
-    tweetsToRenderAppend(state, { tweetsToAppend }) {
+    feedTweetsAppend(state, { tweetsToAppend }) {
       let urlNext = tweetsToAppend.next ? new URL(tweetsToAppend.next) : null;
       // let urlPrevious = new URL(tweetsToAppend.next) // FIX ME (condition) ? :
 
-      state.tweetsToRender = {
-        ...state.tweetsToRender,
+      state.feedTweets = {
+        ...state.feedTweets,
         count: tweetsToAppend.count,
         next: urlNext ? urlNext.pathname + urlNext.search : null,
         previous: tweetsToAppend.previous
       };
-      state.tweetsToRender.results.push(...tweetsToAppend.results); // append tweets
+      state.feedTweets.results.push(...tweetsToAppend.results); // append tweets
+    },
+    clearFeedTweets(state) {
+      state.feedTweets = {};
     }
   },
   actions: {
@@ -43,10 +46,10 @@ export default {
       axios
         .get(context.rootState.apiUrls.tweet.feed)
         .then(response => {
-          context.commit("setTweetsToRender", {
-            tweetsToRender: response.data
+          context.commit("setFeedTweets", {
+            feedTweets: response.data
           });
-          console.log("setTweetsToRender", response.data);
+          console.log("setFeedTweets", response.data);
         })
         .catch(error => {
           console.log("/tweet/feed/", error);
@@ -80,24 +83,36 @@ export default {
           console.log("/tweet/comments/", error);
         });
     },
-    loadMoreTweets(context) {
-      console.log("loadMoreTweets called", context.state.tweetsToRender);
+    loadMoreFeedTweets(context) {
+      console.log("loadMoreFeedTweets called", context.state.feedTweets);
       axios
-        .get(context.state.tweetsToRender.next)
+        .get(context.state.feedTweets.next)
         .then(response => {
-          context.commit("tweetsToRenderAppend", {
+          context.commit("feedTweetsAppend", {
             tweetsToAppend: response.data
           });
-          console.log("tweetsToRenderAppend", response.data);
+          console.log("feedTweetsAppend", response.data);
         })
         .catch(error => {
-          console.log("loadMoreTweets eror", error);
+          console.log("loadMoreFeedTweets eror", error);
+        });
+    },
+    fetchProfileTweets(context, userSlug) {
+      console.log("fetchProfileTweets called", userSlug);
+      axios
+        .get(context.rootState.apiUrls.tweet.user + userSlug)
+        .then(response => {
+          context.commit("setProfileTweets", { profileTweets: response.data });
+          console.log("setProfileTweets", response.data);
+        })
+        .catch(error => {
+          console.log("setProfileTweets erro", error);
         });
     }
   },
   getters: {
-    getTweetsToRender(state) {
-      return state.tweetsToRender;
+    getFeedTweets(state) {
+      return state.feedTweets;
     },
     getTweetDetails(state) {
       return state.tweetDetails;

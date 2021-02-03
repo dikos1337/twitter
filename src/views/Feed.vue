@@ -7,14 +7,14 @@
         </v-col>
         <v-col>
           <TweetInputForm />
-          <v-list color="transparent" v-if="getTweetsToRender.count">
+          <v-list color="transparent" v-if="getFeedTweets.count">
             <div
-              v-infinite-scroll="loadMoreTweets"
+              v-infinite-scroll="loadMoreFeedTweets"
               infinite-scroll-disabled="isInfiniteScrollPossible"
               infinite-scroll-distance="10"
             >
               <v-list-item
-                v-for="tweet in getTweetsToRender.results"
+                v-for="tweet in getFeedTweets.results"
                 :key="tweet.id"
                 :to="`/${tweet.user.slug}/status/${tweet.id}`"
                 class="pa-0"
@@ -60,14 +60,14 @@ export default {
 
   data: () => ({ busy: false }),
   methods: {
-    ...mapActions(["fetchFeedTweets", "loadMoreTweets"])
+    ...mapActions(["fetchFeedTweets", "loadMoreFeedTweets"])
   },
   computed: {
-    ...mapGetters(["getIsAuthenticatedStatus", "getTweetsToRender"]),
+    ...mapGetters(["getIsAuthenticatedStatus", "getFeedTweets"]),
     isInfiniteScrollPossible() {
       /* Флаг для того, чтобы  Infinite Scroll 
       перестал пытаться загрузить новые данные*/
-      return this.getTweetsToRender.next ? false : true;
+      return this.getFeedTweets.next ? false : true;
     }
   },
   created() {

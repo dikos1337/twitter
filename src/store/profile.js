@@ -10,12 +10,12 @@ export default {
       state.profileData = profileData;
     },
     setProfileTweets(state, { profileTweets }) {
-      let urlNext = new URL(profileTweets.next);
+      let urlNext = profileTweets.next ? new URL(profileTweets.next) : null;
       // let urlPrevious = new URL(tweetsToAppend.next) // FIX ME (condition) ? :
 
       state.profileTweets = {
         count: profileTweets.count,
-        next: urlNext.pathname + urlNext.search,
+        next: urlNext ? urlNext.pathname + urlNext.search : null,
         previous: profileTweets.previous,
         results: profileTweets.results
       };
@@ -23,6 +23,7 @@ export default {
       //   state.profileTweets = profileTweets;
     },
     clearProfileData(state) {
+      console.log("clearProfileData");
       state.profileData = {};
     },
     profileTweetsAppend(state, { tweetsToAppend }) {

@@ -5,6 +5,7 @@ import Feed from "@/views/Feed.vue";
 import Profile from "@/views/Profile.vue";
 import TweetDetails from "@/views/TweetDetails.vue";
 import NotFound from "@/views/NotFound.vue";
+import store from "@/store";
 
 Vue.use(VueRouter);
 
@@ -53,6 +54,7 @@ const routes = [
     name: "Profile",
     component: Profile,
     beforeEnter: (to, from, next) => {
+      store.commit("clearProfileData");
       window.scrollTo(0, 0);
       next();
     }

@@ -17,7 +17,11 @@ const routes = [
   {
     path: "/feed",
     name: "Feed",
-    component: Feed
+    component: Feed,
+    beforeEnter: (to, from, next) => {
+      window.scrollTo(0, 0);
+      next();
+    }
   },
   {
     path: "/explore",
@@ -47,7 +51,11 @@ const routes = [
   {
     path: "/:userSlug",
     name: "Profile",
-    component: Profile
+    component: Profile,
+    beforeEnter: (to, from, next) => {
+      window.scrollTo(0, 0);
+      next();
+    }
   },
   {
     path: "/:userSlug/status/:tweetId",

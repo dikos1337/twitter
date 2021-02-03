@@ -57,13 +57,7 @@ export default {
     RightSideBar,
     TweetCard
   },
-  data() {
-    return {
-      userSlug: this.$route.params.userSlug,
-      userData: {},
-      userTweets: []
-    };
-  },
+  data: () => ({}),
   methods: {
     ...mapActions([
       "checkAuthentication",
@@ -82,6 +76,9 @@ export default {
       /* Флаг для того, чтобы  Infinite Scroll 
       перестал пытаться загрузить новые данные */
       return this.getProfileTweets.next ? false : true;
+    },
+    userSlug() {
+      return this.$route.params.userSlug;
     }
   },
   created() {
@@ -91,13 +88,10 @@ export default {
     console.log("$route.params.userSlug", this.userSlug);
     if (this.getIsAuthenticatedStatus) {
       this.fetchProfileData(context.userSlug);
-      console.log("getPofileData ", this.getPofileData);
     } else {
       let interval = setInterval(() => {
         if (this.getIsAuthenticatedStatus) {
           this.fetchProfileData(context.userSlug);
-          console.log("getPofileData ", this.getPofileData);
-
           clearInterval(interval);
         }
       }, 100);

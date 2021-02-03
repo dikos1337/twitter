@@ -6,27 +6,32 @@
           <LeftSideBar />
         </v-col>
         <v-col>
-          <ProfileHeader :user-data="userData" />
-          <v-list color="transparent" v-if="userTweets.length">
-            <v-list-item
-              v-for="tweet in userTweets"
-              :key="tweet.id"
-              :to="`/${tweet.user.slug}/status/${tweet.id}`"
-              class="pa-0"
-            >
-              <v-list-item-content class="pa-0">
-                <TweetCard :tweet="tweet" />
-              </v-list-item-content>
-            </v-list-item>
-          </v-list>
-          <v-list color="transparent" v-else>
-            <v-list-item-content
-              ><v-list-item>
-                Нет твитов
-                <!-- TODO FIXME придумать что нибудь -->
-              </v-list-item></v-list-item-content
-            >
-          </v-list>
+          <ProfileHeader :user-data="getPofileData" />
+          <div
+            v-infinite-scroll="loadMoreProfileTweets"
+            infinite-scroll-disabled="isInfiniteScrollPossible"
+            infinite-scroll-distance="10"
+          >
+            <v-list color="transparent" v-if="getProfileTweets.count">
+              <v-list-item
+                v-for="tweet in getProfileTweets.results"
+                :key="tweet.id"
+                :to="`/${tweet.user.slug}/status/${tweet.id}`"
+                class="pa-0"
+              >
+                <v-list-item-content class="pa-0">
+                  <TweetCard :tweet="tweet" />
+                </v-list-item-content>
+              </v-list-item>
+            </v-list>
+            <v-list color="transparent" v-else>
+              <v-list-item-content
+                ><v-list-item>
+                  Нет твитов
+                </v-list-item></v-list-item-content
+              >
+            </v-list>
+          </div>
           <!-- </v-container> -->
         </v-col>
         <v-col cols="auto">
@@ -60,50 +65,39 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["checkAuthentication"]),
-    fetchTweets() {
-      let context = this;
-      context.$axios
-        .get(context.$store.state.apiUrls.tweet.user + context.userData.slug)
-        .then(response => {
-          this.userTweets = response.data.results;
-          let date_options = { year: "numeric", month: "long" };
-          this.userData.joined_at = new Date(
-            this.userData.joined_at
-          ).toLocaleDateString("en-US", date_options);
-
-          console.log("userTweets", this.userTweets);
-        })
-        .catch(error => {
-          console.log("/tweet/user/", error);
-        });
-    },
-    fetchUserData() {
-      let context = this;
-      this.$axios
-        .get(context.$store.state.apiUrls.accounts.profile + context.userSlug)
-        .then(response => {
-          this.userData = response.data;
-          console.log("userData", this.userData);
-
-          context.fetchTweets();
-        })
-        .catch(error => {
-          console.log("accounts.profile + context.userSlug", error);
-          context.$router.push({ name: "NotFound" });
-        });
+    ...mapActions([
+      "checkAuthentication",
+      "fetchProfileData",
+      "fetchProfileTweets",
+      "loadMoreProfileTweets"
+    ])
+  },
+  computed: {
+    ...mapGetters([
+      "getIsAuthenticatedStatus",
+      "getProfileTweets",
+      "getPofileData"
+    ]),
+    isInfiniteScrollPossible() {
+      /* Флаг для того, чтобы  Infinite Scroll 
+      перестал пытаться загрузить новые данные */
+      return this.getProfileTweets.next ? false : true;
     }
   },
-  computed: { ...mapGetters(["getIsAuthenticatedStatus"]) },
   created() {
     /* FIXME Возможно убрать проверку авторизации,
     чтобы можно было смотреть профиль без авторизации */
+    let context = this;
+    console.log("$route.params.userSlug", this.userSlug);
     if (this.getIsAuthenticatedStatus) {
-      this.fetchUserData();
+      this.fetchProfileData(context.userSlug);
+      console.log("getPofileData ", this.getPofileData);
     } else {
       let interval = setInterval(() => {
         if (this.getIsAuthenticatedStatus) {
-          this.fetchUserData();
+          this.fetchProfileData(context.userSlug);
+          console.log("getPofileData ", this.getPofileData);
+
           clearInterval(interval);
         }
       }, 100);

@@ -3,6 +3,7 @@ import Vuex from "vuex";
 import apiUrls from "./apiUrls";
 import tweetApi from "./tweetApi";
 import dialogs from "./dialogs";
+import profile from "./profile";
 import axios from "axios";
 import router from "@/router";
 
@@ -59,6 +60,7 @@ export default new Vuex.Store({
   modules: {
     apiUrls,
     tweetApi,
-    dialogs
+    dialogs,
+    profile
   }
 });

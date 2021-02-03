@@ -1,24 +1,28 @@
 # twitter
+twitter clone (work in progress)
 
-## Project setup
-```
-npm install
-```
+## Запуск под Linux (для разработки)
 
-### Compiles and hot-reloads for development
+Для начала надо скачать проект и установить зависимости.
+```sh
+$ git clone https://github.com/dikos1337/twitter
+$ cd twitter
+$ npm install
+$ cd backend
+$ python -m venv venv
+$ . venv/bin/activate
+$ pip install -r requirements.txt
 ```
-npm run serve
+Cделать миграции и cоздать супер пользователя.
+```sh
+(venv) /backend$ python manage.py makemigrations
+(venv) /backend$ python manage.py migrate
+(venv) /backend$ python manage.py createsuperuser
 ```
-
-### Compiles and minifies for production
+Запуск frontend
+```sh
+$ npm run serve
 ```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+Запуск backend
+```sh
+(venv) /backend$ python manage.py runserver

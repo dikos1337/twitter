@@ -86,16 +86,11 @@ export default {
     чтобы можно было смотреть профиль без авторизации */
     let context = this;
     console.log("$route.params.userSlug", this.userSlug);
-    if (this.getIsAuthenticatedStatus) {
-      this.fetchProfileData(context.userSlug);
-    } else {
-      let interval = setInterval(() => {
-        if (this.getIsAuthenticatedStatus) {
-          this.fetchProfileData(context.userSlug);
-          clearInterval(interval);
-        }
-      }, 100);
-    }
+    console.log(
+      "this.getIsAuthenticatedStatus PROFILE",
+      this.getIsAuthenticatedStatus
+    );
+    this.fetchProfileData(context.userSlug);
   }
 };
 </script>

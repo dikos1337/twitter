@@ -73,7 +73,7 @@ export default {
       ]
     };
   },
-  computed: { ...mapGetters(["getUserSlug"]) },
+  computed: { ...mapGetters(["getUserSlug", "getIsAuthenticatedStatus"]) },
   methods: {
     ...mapActions(["checkAuthentication"]),
     ...mapMutations(["toggleMakeTweetDialogState"]),
@@ -83,19 +83,15 @@ export default {
     }
   },
   created() {
-    /* TODO Возможно убрать проверку авторизации,
-    чтобы можно было смотреть твит или профиль без авторизации,
-    но тогда по другому рендерить список */
     if (!this.getIsAuthenticatedStatus) {
-      this.checkAuthentication().then(() => {
-        console.log("THEN this.getUserSlug ==", this.getUserSlug);
-        let interval = setInterval(() => {
-          if (this.getUserSlug) {
-            this.setUserSlug(this.getUserSlug);
-            clearInterval(interval);
-          }
-        }, 100);
-      });
+      console.log("THEN this.getUserSlug ==", this.getUserSlug);
+      // Ждем авторизацию которая делается в роутер хуке
+      let interval = setInterval(() => {
+        if (this.getUserSlug) {
+          this.setUserSlug(this.getUserSlug);
+          clearInterval(interval);
+        }
+      }, 100);
     } else {
       this.setUserSlug(this.getUserSlug);
     }

@@ -63,24 +63,13 @@ export default {
     ])
   },
   created() {
-    /* FIXME Возможно убрать проверку авторизации,
-    чтобы можно было смотреть твит без авторизации */
     const payload = {
       userSlug: this.userSlug,
       tweetId: this.tweetId
     };
-    if (this.getIsAuthenticatedStatus) {
-      this.fetchTweetDetails(payload);
-      this.fetchTweetComments(payload);
-    } else {
-      let interval = setInterval(() => {
-        if (this.getIsAuthenticatedStatus) {
-          this.fetchTweetDetails(payload);
-          this.fetchTweetComments(payload);
-          clearInterval(interval);
-        }
-      }, 100);
-    }
+
+    this.fetchTweetDetails(payload);
+    this.fetchTweetComments(payload);
   }
 };
 </script>

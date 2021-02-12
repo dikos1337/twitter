@@ -71,16 +71,7 @@ export default {
     }
   },
   created() {
-    if (this.getIsAuthenticatedStatus) {
-      this.fetchFeedTweets();
-    } else {
-      let interval = setInterval(() => {
-        if (this.getIsAuthenticatedStatus) {
-          this.fetchFeedTweets();
-          clearInterval(interval);
-        }
-      }, 100);
-    }
+    this.fetchFeedTweets();
   }
 };
 </script>

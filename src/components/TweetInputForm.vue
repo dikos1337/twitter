@@ -9,18 +9,20 @@
       auto-grow
     >
     </v-textarea>
-
-    <v-btn
-      color="blue lighten-1"
-      style="color:white"
-      @click="valideteForm"
-      :disabled="!form.text.length"
-      depressed
-      rounded
-      large
-    >
-      Tweet
-    </v-btn>
+    <v-row justify="end">
+      <v-btn
+        color="blue lighten-1"
+        class="mt-4 mr-2 mb-1"
+        style="color:white"
+        @click="valideteForm"
+        :disabled="!form.text.length"
+        depressed
+        rounded
+        large
+      >
+        Tweet
+      </v-btn>
+    </v-row>
   </v-container>
 </template>
 

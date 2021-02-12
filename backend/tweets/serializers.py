@@ -15,6 +15,18 @@ class CreateTweetSerializer(serializers.ModelSerializer):
         )
 
 
+class CreateCommentSerializer(serializers.ModelSerializer):
+    """Create a tweet serializer"""
+    class Meta:
+        model = TweetComment
+        fields = (
+            'id',
+            'tweet',
+            'text',
+            'created',
+        )
+
+
 class TweetSerializer(serializers.ModelSerializer):
     """
     Tweet serializer with detailed user information

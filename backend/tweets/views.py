@@ -2,14 +2,35 @@ from rest_framework import generics, permissions, status
 from rest_framework.response import Response
 
 from tweets.models import Tweet, TweetComment
-from tweets.serializers import (CreateTweetSerializer, TweetCommentSerializer,
-                                TweetSerializer)
+from tweets.serializers import (CreateCommentSerializer, CreateTweetSerializer,
+                                TweetCommentSerializer, TweetSerializer)
 
 
 class CreateTweetView(generics.CreateAPIView):
     """Create a tweet view"""
     queryset = Tweet.objects.all()
     serializer_class = CreateTweetSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def perform_create(self, serializer, user):
+        # Добавляю к форме объект пользователя из сессии
+        serializer.save(**{"user": user})
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        self.perform_create(serializer, user=request.user)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data,
+                        status=status.HTTP_201_CREATED,
+                        headers=headers)
+
+
+class CreateCommentView(generics.CreateAPIView):
+    """Create a tweet view"""
+    queryset = TweetComment.objects.all()
+    serializer_class = CreateCommentSerializer
     permission_classes = [permissions.IsAuthenticated]
 
     def perform_create(self, serializer, user):

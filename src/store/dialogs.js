@@ -4,7 +4,8 @@ export default {
   state: {
     signup: false,
     login: false,
-    makeTweet: false
+    makeTweet: false,
+    makeReply: { state: false, tweetData: {} }
   },
   mutations: {
     toggleSignupDialogState(state) {
@@ -15,6 +16,12 @@ export default {
     },
     toggleMakeTweetDialogState(state) {
       Vue.set(state, "makeTweet", !state.makeTweet);
+    },
+    toggleReplyDialogState(state) {
+      state.makeReply.state = !state.makeReply.state;
+    },
+    setReplyTweetData(state, tweetData) {
+      state.makeReply.tweetData = tweetData;
     }
   },
   actions: {},
@@ -27,6 +34,12 @@ export default {
     },
     getDialogMakeTweetState(state) {
       return state.makeTweet;
+    },
+    getDialogReplyState(state) {
+      return state.makeReply.state;
+    },
+    getReplyTweetData(state) {
+      return state.makeReply.tweetData;
     }
   }
 };

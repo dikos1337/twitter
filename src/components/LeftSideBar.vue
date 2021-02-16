@@ -33,17 +33,22 @@
       </v-btn>
     </v-card-actions>
     <TweetInputFormDialog />
+    <!-- FIXME-->
+    <ReplyInputFormDialog />
+    <!-- FIXME / подумать где лучше всего инжектить форму -->
   </v-card>
 </template>
 
 <script>
 import { mapGetters, mapActions, mapMutations } from "vuex";
 import TweetInputFormDialog from "@/components/TweetInputFormDialog.vue";
+import ReplyInputFormDialog from "@/components/ReplyInputFormDialog.vue";
 
 export default {
   name: "LeftSideBar",
   components: {
-    TweetInputFormDialog
+    TweetInputFormDialog,
+    ReplyInputFormDialog
   },
   data() {
     return {

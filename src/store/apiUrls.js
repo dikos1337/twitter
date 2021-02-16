@@ -12,7 +12,8 @@ export default {
       detail: "/api/v1/tweet/detail/",
       create: "/api/v1/tweet/create/",
       feed: "/api/v1/tweet/feed/",
-      comments: "/api/v1/tweet/comments/"
+      comments: "/api/v1/tweet/comments/",
+      createComment: "/api/v1/tweet/comments/create/"
     }
   },
   mutations: {},

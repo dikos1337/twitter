@@ -31,21 +31,21 @@
           </router-link>
         </span>
         <v-row align="center" justify="end">
-          <v-icon class="mr-1">
-            mdi-heart
-          </v-icon>
+          <span class="subheading mr-2">
+            <v-icon class="mr-1">mdi-heart </v-icon>
+            {{ tweet.likes }}
+          </span>
 
-          <span class="subheading mr-2">{{ tweet.likes }}</span>
+          <span class="subheading mr-2">
+            <v-icon class="mr-1"> mdi-share-variant </v-icon>
+            {{ tweet.reposts }}
+          </span>
 
-          <v-icon class="mr-1">
-            mdi-share-variant
-          </v-icon>
-          <span class="subheading mr-2">{{ tweet.reposts }}</span>
-          <v-icon class="mr-1">
-            mdi-comment
-          </v-icon>
-          <span class="subheading mr-2">{{ 0 }}</span>
-          <!-- FIXME replace 0 with tweet.comment.count -->
+          <span class="subheading mr-2" @click="openReplyDialog()">
+            <v-icon class="mr-1"> mdi-comment </v-icon>
+            {{ 0 }}
+            <!-- FIXME replace 0 with tweet.comment.count -->
+          </span>
         </v-row>
       </v-list-item>
     </v-card-actions>
@@ -53,10 +53,19 @@
 </template>
 
 <script>
+import { mapMutations } from "vuex";
+
 export default {
   name: "TweetCard",
   props: { tweet: Object },
   data: () => ({}),
+  methods: {
+    ...mapMutations(["toggleReplyDialogState", "setReplyTweetData"]),
+    openReplyDialog() {
+      this.setReplyTweetData(this.tweet);
+      this.toggleReplyDialogState();
+    }
+  },
   created() {}
 };
 </script>
